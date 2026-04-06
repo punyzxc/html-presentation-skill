@@ -1,5 +1,19 @@
 # Полный шаблон HTML-презентации
 
+> ⚠️ **Офлайн-режим:** Все презентации работают без интернета. Google Fonts имеют fallback на системные.
+
+---
+
+## Содержание
+
+1. [HTML-структура](#html-структура)
+2. [Стили по темам](#стили-по-темам)
+3. [Базовый CSS](#базовый-css-glassmorphism)
+4. [JavaScript навигация](#javascript-навигация)
+5. [Компоненты слайдов](#компоненты-слайдов)
+
+---
+
 ## HTML-структура
 
 ```html
@@ -55,7 +69,174 @@
 
 ---
 
-## Полный CSS
+## Стили по темам
+
+### 🔮 GLASSMORPHISM (тёмный, стекло)
+```css
+:root {
+  --bg-dark: #0a0a0f;
+  --bg-surface: #0f172a;
+  --glass: rgba(255, 255, 255, 0.05);
+  --glass-hover: rgba(255, 255, 255, 0.08);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --text-primary: #f1f5f9;
+  --text-secondary: rgba(255, 255, 255, 0.65);
+  --text-muted: rgba(255, 255, 255, 0.4);
+}
+body { background: var(--bg-dark); }
+.glass-card { backdrop-filter: blur(20px); }
+```
+
+### 🌙 MINIMAL DARK
+```css
+:root {
+  --bg-dark: #09090b;
+  --bg-surface: #18181b;
+  --glass: #18181b;
+  --glass-hover: #27272a;
+  --glass-border: #27272a;
+  --text-primary: #fafafa;
+  --text-secondary: #a1a1aa;
+  --text-muted: #71717a;
+}
+body { background: var(--bg-dark); }
+/* Без backdrop-filter, без орбов */
+.bg-wrap { display: none; }
+```
+
+### ☀️ MINIMAL LIGHT
+```css
+:root {
+  --bg-dark: #ffffff;
+  --bg-surface: #f4f4f5;
+  --glass: #ffffff;
+  --glass-hover: #f4f4f5;
+  --glass-border: #e4e4e7;
+  --text-primary: #18181b;
+  --text-secondary: #52525b;
+  --text-muted: #a1a1aa;
+}
+body { background: #ffffff; color: #18181b; }
+.bg-wrap { display: none; }
+.nav-dot { background: rgba(0,0,0,0.2); }
+.nav-dot.active { background: var(--accent-1); }
+```
+
+### 🌈 GRADIENT MESH
+```css
+:root {
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255,255,255,0.85);
+  --glass: rgba(0,0,0,0.2);
+  --glass-border: rgba(255,255,255,0.2);
+}
+body { 
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+  background-attachment: fixed;
+}
+/* Разные градиенты для слайдов */
+section:nth-child(2n) { background: linear-gradient(135deg, #f093fb, #f5576c); }
+section:nth-child(3n) { background: linear-gradient(135deg, #4facfe, #00f2fe); }
+.bg-wrap { display: none; }
+```
+
+### 🔳 NEOMORPHISM
+```css
+:root {
+  --bg-dark: #e0e5ec;
+  --text-primary: #2d3436;
+  --text-secondary: #636e72;
+  --text-muted: #b2bec3;
+}
+body { background: #e0e5ec; }
+.glass-card {
+  background: #e0e5ec;
+  border: none;
+  box-shadow: 8px 8px 16px #b8bec4, -8px -8px 16px #ffffff;
+}
+.glass-card:hover {
+  box-shadow: 12px 12px 24px #b8bec4, -12px -12px 24px #ffffff;
+}
+.bg-wrap { display: none; }
+.nav-dot { background: #d1d5db; box-shadow: 2px 2px 4px #b8bec4, -2px -2px 4px #fff; }
+```
+
+### ⚡ BRUTALIST
+```css
+:root {
+  --bg-dark: #000000;
+  --text-primary: #ffffff;
+  --text-secondary: #ffffff;
+  --accent-1: #ff0000;
+  --glass: transparent;
+  --glass-border: #ff0000;
+}
+body { background: #000; font-family: 'Space Mono', monospace; }
+.glass-card {
+  background: transparent;
+  border: 3px solid var(--accent-1);
+  border-radius: 0;
+}
+h1, h2, h3 { text-transform: uppercase; font-weight: 900; letter-spacing: 0.05em; }
+.bg-wrap, .bg-grid { display: none; }
+/* Без анимаций или резкие */
+.animate-on-view { animation: none; opacity: 1; }
+```
+
+### 🏢 CORPORATE
+```css
+:root {
+  --bg-dark: #f8fafc;
+  --bg-surface: #ffffff;
+  --glass: #ffffff;
+  --glass-border: #e2e8f0;
+  --text-primary: #1e293b;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+  --accent-1: #1e40af;
+  --accent-2: #3b82f6;
+}
+body { background: #f8fafc; }
+.glass-card { box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+.bg-wrap { display: none; }
+```
+
+### 🎮 RETRO / NEON
+```css
+:root {
+  --bg-dark: #0f0f23;
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255,255,255,0.8);
+  --accent-1: #ff2a6d;
+  --accent-2: #05d9e8;
+  --accent-3: #d300c5;
+  --glass: rgba(255,255,255,0.03);
+  --glass-border: rgba(5,217,232,0.3);
+}
+body { background: #0f0f23; }
+h1, h2 { 
+  text-shadow: 0 0 10px var(--accent-2), 0 0 20px var(--accent-2), 0 0 40px var(--accent-2); 
+}
+.gradient-text {
+  background: linear-gradient(90deg, #ff2a6d, #05d9e8, #d300c5);
+  animation: gradientShift 3s ease infinite;
+}
+@keyframes gradientShift {
+  0%, 100% { filter: hue-rotate(0deg); }
+  50% { filter: hue-rotate(30deg); }
+}
+/* Сетка на фоне */
+.bg-grid {
+  background-image: 
+    linear-gradient(transparent 97%, rgba(5,217,232,0.15) 97%),
+    linear-gradient(90deg, transparent 97%, rgba(5,217,232,0.15) 97%);
+  background-size: 40px 40px;
+}
+```
+
+---
+
+## Базовый CSS (Glassmorphism)
 
 ```css
 * {
@@ -574,26 +755,79 @@ ul.styled-list li::before {
 /* ═══════════════════════════════════════
    ANIMATIONS
    ═══════════════════════════════════════ */
+
+/* Появление снизу (основное) */
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(30px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
+/* Простое появление */
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
 }
 
+/* Появление с масштабом */
 @keyframes scaleIn {
   from { opacity: 0; transform: scale(0.9); }
   to { opacity: 1; transform: scale(1); }
 }
 
+/* Появление слева */
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* Появление справа */
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* Появление сверху */
+@keyframes slideInDown {
+  from { opacity: 0; transform: translateY(-30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Пульсация */
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(0.85); }
+}
+
+/* Свечение (для NEON стиля) */
+@keyframes glow {
+  0%, 100% { text-shadow: 0 0 10px currentColor, 0 0 20px currentColor; }
+  50% { text-shadow: 0 0 20px currentColor, 0 0 40px currentColor, 0 0 60px currentColor; }
+}
+
+/* Печатная машинка */
+@keyframes typewriter {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+/* Градиентный сдвиг */
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Классы анимаций */
 .animate-in { animation: fadeInUp 0.6s ease-out forwards; }
 .animate-fade { animation: fadeIn 0.5s ease-out forwards; }
 .animate-scale { animation: scaleIn 0.5s ease-out forwards; }
+.animate-left { animation: slideInLeft 0.6s ease-out forwards; }
+.animate-right { animation: slideInRight 0.6s ease-out forwards; }
+.animate-down { animation: slideInDown 0.5s ease-out forwards; }
+.animate-glow { animation: glow 2s ease-in-out infinite; }
+.animate-pulse { animation: pulse 2s ease-in-out infinite; }
 
-/* Stagger delays */
+/* Stagger delays — элементы появляются по очереди */
 .stagger > *:nth-child(1) { animation-delay: 0.1s; }
 .stagger > *:nth-child(2) { animation-delay: 0.2s; }
 .stagger > *:nth-child(3) { animation-delay: 0.3s; }
@@ -603,8 +837,39 @@ ul.styled-list li::before {
 .stagger > *:nth-child(7) { animation-delay: 0.7s; }
 .stagger > *:nth-child(8) { animation-delay: 0.8s; }
 
+/* Быстрый stagger */
+.stagger-fast > *:nth-child(1) { animation-delay: 0.05s; }
+.stagger-fast > *:nth-child(2) { animation-delay: 0.1s; }
+.stagger-fast > *:nth-child(3) { animation-delay: 0.15s; }
+.stagger-fast > *:nth-child(4) { animation-delay: 0.2s; }
+.stagger-fast > *:nth-child(5) { animation-delay: 0.25s; }
+.stagger-fast > *:nth-child(6) { animation-delay: 0.3s; }
+
+/* Медленный stagger */
+.stagger-slow > *:nth-child(1) { animation-delay: 0.2s; }
+.stagger-slow > *:nth-child(2) { animation-delay: 0.4s; }
+.stagger-slow > *:nth-child(3) { animation-delay: 0.6s; }
+.stagger-slow > *:nth-child(4) { animation-delay: 0.8s; }
+
+/* Элементы скрыты до появления */
 .animate-on-view { opacity: 0; }
 .animate-on-view.animate-in { opacity: 1; }
+
+/* Hover-эффекты */
+.hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.hover-lift:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
+
+.hover-glow {
+  transition: box-shadow 0.3s ease;
+}
+.hover-glow:hover {
+  box-shadow: 0 0 30px var(--glow);
+}
 ```
 
 ---
