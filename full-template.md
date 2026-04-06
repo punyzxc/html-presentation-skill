@@ -1073,3 +1073,540 @@ document.addEventListener('DOMContentLoaded', () => {
   </div>
 </section>
 ```
+
+---
+
+## Дополнительные компоненты
+
+### Process Flow Slide (горизонтальный процесс)
+```html
+<section>
+  <div class="slide-content">
+    <h2 class="animate-on-view" style="text-align: center;">Процесс</h2>
+    <hr class="divider center animate-on-view">
+    <div class="process-flow stagger">
+      <div class="process-step animate-on-view">
+        <div class="step-icon">1</div>
+        <div class="step-label">Анализ</div>
+      </div>
+      <div class="process-arrow animate-on-view">→</div>
+      <div class="process-step animate-on-view">
+        <div class="step-icon">2</div>
+        <div class="step-label">Разработка</div>
+      </div>
+      <div class="process-arrow animate-on-view">→</div>
+      <div class="process-step animate-on-view">
+        <div class="step-icon">3</div>
+        <div class="step-label">Тестирование</div>
+      </div>
+      <div class="process-arrow animate-on-view">→</div>
+      <div class="process-step animate-on-view">
+        <div class="step-icon">4</div>
+        <div class="step-label">Внедрение</div>
+      </div>
+    </div>
+  </div>
+</section>
+```
+
+### Timeline Slide (вертикальный таймлайн)
+```html
+<section>
+  <div class="slide-content">
+    <h2 class="animate-on-view">История развития</h2>
+    <hr class="divider animate-on-view">
+    <div class="timeline stagger">
+      <div class="timeline-item animate-on-view">
+        <div class="timeline-marker"></div>
+        <div class="timeline-content glass-card">
+          <div class="timeline-date">2020</div>
+          <h4>Начало проекта</h4>
+          <p>Описание первого этапа</p>
+        </div>
+      </div>
+      <div class="timeline-item animate-on-view">
+        <div class="timeline-marker"></div>
+        <div class="timeline-content glass-card">
+          <div class="timeline-date">2022</div>
+          <h4>Масштабирование</h4>
+          <p>Описание второго этапа</p>
+        </div>
+      </div>
+      <div class="timeline-item animate-on-view">
+        <div class="timeline-marker"></div>
+        <div class="timeline-content glass-card">
+          <div class="timeline-date">2024</div>
+          <h4>Результаты</h4>
+          <p>Описание текущего этапа</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+```
+
+### Table Slide (сравнительная таблица)
+```html
+<section>
+  <div class="slide-content">
+    <h2 class="animate-on-view">Сравнение подходов</h2>
+    <hr class="divider animate-on-view">
+    <div class="styled-table-wrap animate-on-view">
+      <table class="styled-table">
+        <thead>
+          <tr>
+            <th>Критерий</th>
+            <th>Подход А</th>
+            <th>Подход Б</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Скорость</td>
+            <td>Высокая</td>
+            <td>Средняя</td>
+          </tr>
+          <tr>
+            <td>Стоимость</td>
+            <td>Низкая</td>
+            <td>Высокая</td>
+          </tr>
+          <tr>
+            <td>Сложность</td>
+            <td>Средняя</td>
+            <td>Низкая</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+```
+
+### Diagram Slide (SVG схема связей)
+```html
+<section>
+  <div class="slide-content">
+    <h2 class="animate-on-view" style="text-align: center;">Структура системы</h2>
+    <hr class="divider center animate-on-view">
+    <svg class="mindmap animate-on-view" viewBox="0 0 500 300" width="100%" height="300" style="max-width: 600px; margin: 0 auto; display: block;">
+      <!-- Линии -->
+      <line x1="250" y1="150" x2="100" y2="60" stroke="var(--accent-1)" stroke-width="2" opacity="0.4"/>
+      <line x1="250" y1="150" x2="400" y2="60" stroke="var(--accent-2)" stroke-width="2" opacity="0.4"/>
+      <line x1="250" y1="150" x2="100" y2="240" stroke="var(--accent-3)" stroke-width="2" opacity="0.4"/>
+      <line x1="250" y1="150" x2="400" y2="240" stroke="var(--accent-4)" stroke-width="2" opacity="0.4"/>
+      
+      <!-- Центр -->
+      <circle cx="250" cy="150" r="45" fill="url(#grad1)"/>
+      <text x="250" y="155" text-anchor="middle" fill="white" font-size="14" font-weight="600">Ядро</text>
+      
+      <!-- Узлы -->
+      <circle cx="100" cy="60" r="35" fill="var(--glass)" stroke="var(--accent-1)" stroke-width="2"/>
+      <text x="100" y="65" text-anchor="middle" fill="var(--text-primary)" font-size="11">Модуль 1</text>
+      
+      <circle cx="400" cy="60" r="35" fill="var(--glass)" stroke="var(--accent-2)" stroke-width="2"/>
+      <text x="400" y="65" text-anchor="middle" fill="var(--text-primary)" font-size="11">Модуль 2</text>
+      
+      <circle cx="100" cy="240" r="35" fill="var(--glass)" stroke="var(--accent-3)" stroke-width="2"/>
+      <text x="100" y="245" text-anchor="middle" fill="var(--text-primary)" font-size="11">Модуль 3</text>
+      
+      <circle cx="400" cy="240" r="35" fill="var(--glass)" stroke="var(--accent-4)" stroke-width="2"/>
+      <text x="400" y="245" text-anchor="middle" fill="var(--text-primary)" font-size="11">Модуль 4</text>
+      
+      <defs>
+        <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:var(--accent-1)"/>
+          <stop offset="100%" style="stop-color:var(--accent-3)"/>
+        </linearGradient>
+      </defs>
+    </svg>
+  </div>
+</section>
+```
+
+### Icon Cards Slide (карточки с SVG иконками)
+```html
+<section>
+  <div class="slide-content">
+    <h2 class="animate-on-view">Наши преимущества</h2>
+    <hr class="divider animate-on-view">
+    <div class="grid-3 stagger">
+      <div class="glass-card accent animate-on-view">
+        <div class="icon-circle icon-pulse">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+        </div>
+        <h4>Качество</h4>
+        <p>Высокие стандарты на каждом этапе</p>
+      </div>
+      <div class="glass-card accent animate-on-view">
+        <div class="icon-circle icon-pulse">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+        </div>
+        <h4>Скорость</h4>
+        <p>Быстрая реализация проектов</p>
+      </div>
+      <div class="glass-card accent animate-on-view">
+        <div class="icon-circle icon-pulse">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+            <path d="M2 17l10 5 10-5M2 12l10 5 10-5"></path>
+          </svg>
+        </div>
+        <h4>Масштабируемость</h4>
+        <p>Гибкая архитектура решений</p>
+      </div>
+    </div>
+  </div>
+</section>
+```
+
+---
+
+## CSS для дополнительных компонентов
+
+```css
+/* Process Flow */
+.process-flow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin: 30px 0;
+}
+
+.process-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.step-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+  box-shadow: 0 8px 30px var(--glow);
+}
+
+.step-label {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  text-align: center;
+  max-width: 100px;
+}
+
+.process-arrow {
+  font-size: 1.8rem;
+  color: var(--accent-1);
+  animation: arrowPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes arrowPulse {
+  0%, 100% { opacity: 1; transform: translateX(0); }
+  50% { opacity: 0.5; transform: translateX(5px); }
+}
+
+/* Timeline */
+.timeline {
+  position: relative;
+  padding-left: 50px;
+  max-width: 600px;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 18px;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--gradient);
+  border-radius: 3px;
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 28px;
+}
+
+.timeline-marker {
+  position: absolute;
+  left: -50px;
+  top: 24px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--accent-1);
+  border: 3px solid var(--bg-dark);
+  box-shadow: 0 0 0 4px var(--accent-1);
+}
+
+.timeline-content {
+  padding: 18px 22px;
+}
+
+.timeline-date {
+  font-size: 0.8rem;
+  color: var(--accent-1);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 8px;
+}
+
+/* Styled Table */
+.styled-table-wrap {
+  overflow-x: auto;
+  margin: 24px 0;
+  border-radius: 12px;
+}
+
+.styled-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: clamp(0.85rem, 1.1vw, 1rem);
+}
+
+.styled-table thead {
+  background: var(--gradient);
+}
+
+.styled-table th {
+  padding: 16px 20px;
+  text-align: left;
+  font-weight: 600;
+  color: white;
+}
+
+.styled-table th:first-child { border-radius: 12px 0 0 0; }
+.styled-table th:last-child { border-radius: 0 12px 0 0; }
+
+.styled-table td {
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--glass-border);
+  color: var(--text-secondary);
+}
+
+.styled-table tbody tr {
+  transition: background 0.3s ease;
+}
+
+.styled-table tbody tr:hover {
+  background: var(--glass);
+}
+
+.styled-table tbody tr:last-child td:first-child { border-radius: 0 0 0 12px; }
+.styled-table tbody tr:last-child td:last-child { border-radius: 0 0 12px 0; }
+
+/* Icon animations */
+.icon-circle {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  margin-bottom: 16px;
+}
+
+.icon-pulse svg {
+  animation: iconPulse 2s ease-in-out infinite;
+}
+
+@keyframes iconPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+.icon-spin svg {
+  animation: iconSpin 3s linear infinite;
+}
+
+@keyframes iconSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.icon-draw svg path,
+.icon-draw svg polyline,
+.icon-draw svg line {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  animation: drawLine 1.5s ease forwards;
+}
+
+@keyframes drawLine {
+  to { stroke-dashoffset: 0; }
+}
+
+/* Pros/Cons */
+.pros-cons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.pros, .cons {
+  padding: 24px;
+  border-radius: 16px;
+}
+
+.pros {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(20, 184, 166, 0.1));
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.cons {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(249, 115, 22, 0.1));
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.pros h4, .cons h4 {
+  margin-bottom: 16px;
+}
+
+@media (max-width: 768px) {
+  .pros-cons { grid-template-columns: 1fr; }
+  .timeline { padding-left: 40px; }
+  .timeline::before { left: 13px; }
+  .timeline-marker { left: -40px; }
+}
+```
+
+---
+
+## SVG Иконки (библиотека)
+
+### Базовые иконки
+```html
+<!-- Галочка -->
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <polyline points="20 6 9 17 4 12"></polyline>
+</svg>
+
+<!-- Крестик -->
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <line x1="18" y1="6" x2="6" y2="18"></line>
+  <line x1="6" y1="6" x2="18" y2="18"></line>
+</svg>
+
+<!-- Стрелка вправо -->
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <line x1="5" y1="12" x2="19" y2="12"></line>
+  <polyline points="12 5 19 12 12 19"></polyline>
+</svg>
+
+<!-- Плюс -->
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <line x1="12" y1="5" x2="12" y2="19"></line>
+  <line x1="5" y1="12" x2="19" y2="12"></line>
+</svg>
+
+<!-- Звезда -->
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+</svg>
+
+<!-- Сердце -->
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z"></path>
+</svg>
+```
+
+### Бизнес иконки
+```html
+<!-- График роста -->
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+  <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+  <polyline points="17 6 23 6 23 12"></polyline>
+</svg>
+
+<!-- Пользователь -->
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+  <circle cx="12" cy="7" r="4"></circle>
+  <path d="M5 21v-2a7 7 0 0 1 14 0v2"></path>
+</svg>
+
+<!-- Команда -->
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+  <circle cx="9" cy="7" r="4"></circle>
+  <path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"></path>
+  <circle cx="17" cy="11" r="3"></circle>
+  <path d="M21 21v-2a3 3 0 0 0-3-3h-1"></path>
+</svg>
+
+<!-- Деньги -->
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+  <line x1="12" y1="1" x2="12" y2="23"></line>
+  <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+</svg>
+
+<!-- Цель -->
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+  <circle cx="12" cy="12" r="10"></circle>
+  <circle cx="12" cy="12" r="6"></circle>
+  <circle cx="12" cy="12" r="2"></circle>
+</svg>
+```
+
+### Технологии
+```html
+<!-- Код -->
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+  <polyline points="16 18 22 12 16 6"></polyline>
+  <polyline points="8 6 2 12 8 18"></polyline>
+</svg>
+
+<!-- База данных -->
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+  <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+  <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+  <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+</svg>
+
+<!-- Облако -->
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+  <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path>
+</svg>
+
+<!-- Шестерёнка -->
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+  <circle cx="12" cy="12" r="3"></circle>
+  <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1.08-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1.08 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9c.26.6.8 1.02 1.51 1.08H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+</svg>
+```
+
+### Образование
+```html
+<!-- Книга -->
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+  <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+  <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+</svg>
+
+<!-- Лампочка (идея) -->
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+  <path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"></path>
+</svg>
+
+<!-- Диплом -->
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+  <circle cx="12" cy="8" r="6"></circle>
+  <path d="M15.5 13.5L17 22l-5-3-5 3 1.5-8.5"></path>
+</svg>
+```
