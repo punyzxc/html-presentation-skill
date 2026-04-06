@@ -1329,16 +1329,113 @@ p  { font-size: clamp(1rem, 1.5vw, 1.2rem); }
 
 ### 🟡 Существенные (влияют на качество)
 
-#### 4. Авторы должны быть на титульном И финальном слайдах
-**Правило:** Указывать всех авторов в `.meta` блоке:
+#### 4. Авторы должны быть в отдельных карточках
+**Правило:** Каждый автор — в своей glass-card. Группа — в отдельной карточке.
+
 ```html
-<div class="meta">
-  <span>Автор1, Автор2, Автор3</span>
-  <span>•</span>
-  <span>Группа</span>
-  <span>•</span>
-  <span>Университет</span>
+<!-- На титульном слайде -->
+<div class="authors-grid">
+  <div class="author-card">
+    <div class="author-avatar">А</div>
+    <div class="author-name">Актанов Д.</div>
+  </div>
+  <div class="author-card">
+    <div class="author-avatar">А</div>
+    <div class="author-name">Ашенов К.</div>
+  </div>
+  <div class="author-card">
+    <div class="author-avatar">Т</div>
+    <div class="author-name">Тарасов С.</div>
+  </div>
 </div>
+<div class="group-badge">
+  <span>ИМ-32</span>
+  <span>•</span>
+  <span>Margulan University</span>
+</div>
+```
+
+```css
+.authors-grid {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin: 24px 0;
+}
+
+.author-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 24px;
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  backdrop-filter: blur(20px);
+  transition: all 0.3s ease;
+}
+
+.author-card:hover {
+  background: var(--glass-hover);
+  transform: translateY(-2px);
+}
+
+.author-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: white;
+}
+
+.author-name {
+  font-weight: 500;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+}
+
+.group-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 24px;
+  background: var(--glass);
+  border: 1px solid var(--accent-1);
+  border-radius: 50px;
+  font-size: 0.9rem;
+  color: var(--accent-3);
+  backdrop-filter: blur(20px);
+}
+
+@media (max-width: 480px) {
+  .author-card { padding: 12px 16px; }
+  .author-avatar { width: 40px; height: 40px; font-size: 1rem; }
+  .author-name { font-size: 0.85rem; }
+}
+```
+
+**Пример для нескольких групп:**
+```html
+<div class="groups-row">
+  <div class="group-badge">ИМ-32</div>
+  <div class="group-badge">ИМ-33</div>
+</div>
+```
+
+```css
+.groups-row {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
 ```
 
 #### 5. Footer должен быть в glass-card стиле
