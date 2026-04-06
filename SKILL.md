@@ -1270,6 +1270,161 @@ p  { font-size: clamp(1rem, 1.5vw, 1.2rem); }
 
 ---
 
+## ⚠️ Частые ошибки и их исправления
+
+> Эти проблемы выявлены при создании презентаций. **Исправляй их до финализации!**
+
+### 🔴 Критические (нарушают UX)
+
+#### 1. Несколько авторов не помещаются в footer
+**Проблема:** При 3+ авторах текст выходит за границы экрана на мобильных.
+
+**Решение:**
+```css
+.author-footer {
+  max-width: 300px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  background: var(--glass);
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(10px);
+}
+
+@media (max-width: 480px) {
+  .author-footer { display: none; }
+}
+```
+
+#### 2. Key-point карточки ломаются на мобильных
+**Проблема:** Flex-контейнер с иконкой и текстом не адаптируется.
+
+**Решение:**
+```css
+@media (max-width: 768px) {
+  .key-point { 
+    flex-direction: column; 
+    align-items: center; 
+    text-align: center; 
+  }
+  .key-point .icon-circle { margin-bottom: 12px; }
+}
+```
+
+#### 3. Process Flow стрелки слишком большие на маленьких экранах
+**Проблема:** Стрелки → занимают слишком много места.
+
+**Решение:**
+```css
+@media (max-width: 480px) {
+  .process-arrow { font-size: 1.2rem; }
+  .step-icon { width: 48px; height: 48px; }
+  .step-label { font-size: 0.7rem; max-width: 55px; }
+}
+```
+
+---
+
+### 🟡 Существенные (влияют на качество)
+
+#### 4. Авторы должны быть на титульном И финальном слайдах
+**Правило:** Указывать всех авторов в `.meta` блоке:
+```html
+<div class="meta">
+  <span>Автор1, Автор2, Автор3</span>
+  <span>•</span>
+  <span>Группа</span>
+  <span>•</span>
+  <span>Университет</span>
+</div>
+```
+
+#### 5. Footer должен быть в glass-card стиле
+**Проблема:** Простой текст без фона плохо читается на ярких слайдах.
+
+**Решение:** Всегда оборачивать в стилизованный контейнер:
+```css
+.author-footer {
+  background: var(--glass);
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(10px);
+}
+```
+
+#### 6. Отсутствует breakpoint 480px для очень маленьких экранов
+**Правило:** ВСЕГДА добавлять два медиа-запроса:
+```css
+@media (max-width: 768px) { /* Планшеты */ }
+@media (max-width: 480px) { /* Телефоны */ }
+```
+
+---
+
+### 🟢 Рекомендательные (улучшают качество)
+
+#### 7. Использовать сокращённые имена при нескольких авторах
+**Формат для footer:**
+- 1 автор: `Актанов Д.`
+- 2-3 автора: `Актанов Д., Ашенов К., Тарасов С.`
+- 4+ автора: `Актанов Д. и др.`
+
+#### 8. Stat-card числа должны уменьшаться на мобильных
+```css
+@media (max-width: 480px) {
+  .stat-number { font-size: 2rem; }
+}
+```
+
+#### 9. Glass-card padding должен уменьшаться
+```css
+@media (max-width: 480px) {
+  .glass-card { padding: 20px; }
+}
+```
+
+---
+
+## 📋 Обязательные медиа-запросы
+
+```css
+/* Планшеты */
+@media (max-width: 1000px) {
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 900px) {
+  .grid-3 { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 768px) {
+  section { padding: 40px 20px; }
+  .grid-2 { grid-template-columns: 1fr; }
+  .nav-dots { right: 15px; gap: 10px; }
+  .nav-dot { width: 10px; height: 10px; }
+  .slide-counter { right: 15px; bottom: 15px; font-size: 0.8rem; }
+  .author-footer { left: 15px; bottom: 15px; font-size: 0.65rem; max-width: 200px; }
+  .timeline { padding-left: 40px; }
+  .process-flow { gap: 8px; padding: 20px; }
+  .key-point { flex-direction: column; align-items: center; text-align: center; }
+}
+
+/* Телефоны */
+@media (max-width: 480px) {
+  .author-footer { display: none; }
+  .process-arrow { font-size: 1.2rem; }
+  .step-icon { width: 48px; height: 48px; }
+  .stat-number { font-size: 2rem; }
+  .glass-card { padding: 20px; }
+  h2 { font-size: 1.4rem; }
+}
+```
+
+---
+
 ## 📌 Финальные советы
 
 1. **Не бойся карточек** — лучше много красивых карточек, чем пустой текст
@@ -1277,9 +1432,11 @@ p  { font-size: clamp(1rem, 1.5vw, 1.2rem); }
 3. **Анимируй умеренно** — эффект должен подчёркивать, а не отвлекать
 4. **Тестируй навигацию** — стрелки, пробел, touch должны работать
 5. **Проверяй читаемость** — текст должен быть контрастным
+6. **Тестируй на мобильных** — открой DevTools → 375px ширина
+7. **Проверяй всех авторов** — footer, титульный, финальный слайды
 
 ---
 
 **Разработчик:** Актанов Д., ИМ-32, Margulan University (MU)  
-**Версия:** 2.0  
+**Версия:** 2.1  
 **Обновлено:** 2026
