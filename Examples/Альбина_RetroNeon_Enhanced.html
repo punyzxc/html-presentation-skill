@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Альбина - Retro Neon Enhanced</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --bg-dark: #0f0f23;
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.8);
+            --accent-1: #ff2a6d;
+            --accent-2: #05d9e8;
+            --accent-3: #d300c5;
+            --glass: rgba(255, 255, 255, 0.03);
+        }
+
+        body {
+            background: #0f0f23;
+            color: var(--text-primary);
+            font-family: 'Space Mono', 'Courier New', monospace;
+            line-height: 1.6;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Сканлайны */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(255, 255, 255, 0.03) 2px,
+                rgba(255, 255, 255, 0.03) 4px
+            );
+            pointer-events: none;
+            z-index: -1;
+            animation: scanlineFlicker 0.15s infinite;
+        }
+
+        @keyframes scanlineFlicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.95; }
+        }
+
+        /* Мерцающие заголовки */
+        h1, h2 {
+            text-shadow: 
+                0 0 10px var(--accent-2), 
+                0 0 20px var(--accent-2), 
+                0 0 40px var(--accent-2);
+            animation: neonFlicker 0.15s ease-in-out infinite;
+            font-weight: 900;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        @keyframes neonFlicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+                text-shadow: 
+                    0 0 10px var(--accent-2), 
+                    0 0 20px var(--accent-2), 
+                    0 0 40px var(--accent-2);
+                opacity: 1;
+            }
+            20%, 24%, 55% {
+                text-shadow: 
+                    0 0 5px var(--accent-2), 
+                    0 0 10px var(--accent-2);
+                opacity: 0.8;
+            }
+        }
+
+        h1 {
+            color: var(--accent-1);
+            animation-duration: 0.13s;
+        }
+
+        h2 {
+            color: var(--accent-2);
+            animation-duration: 0.15s;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        /* Карты с RGB сдвигом */
+        .glass-card {
+            background: var(--glass);
+            backdrop-filter: blur(5px);
+            border: 2px solid var(--accent-2);
+            border-radius: 0;
+            padding: 24px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 
+                0 0 20px var(--accent-2),
+                inset 0 0 20px rgba(5, 217, 232, 0.1);
+            transition: all 0.3s ease;
+            margin-bottom: 24px;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(45deg, 
+                transparent 30%, 
+                rgba(255, 42, 109, 0.2) 50%, 
+                transparent 70%);
+            transform: translateX(-100%);
+            animation: rgbGlitch 2s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        @keyframes rgbGlitch {
+            0%, 100% { 
+                transform: translateX(-100%) skewX(0deg);
+            }
+            50% { 
+                transform: translateX(100%) skewX(-45deg);
+            }
+        }
+
+        .glass-card:hover {
+            border-color: var(--accent-1);
+            box-shadow: 
+                0 0 30px var(--accent-1),
+                0 0 50px var(--accent-2),
+                inset 0 0 30px rgba(255, 42, 109, 0.2);
+            animation: glitchCard 0.2s ease-in-out;
+        }
+
+        @keyframes glitchCard {
+            0%, 33%, 66%, 100% { transform: translate(0) skewX(0deg); }
+            34% { transform: translate(-2px) skewX(-2deg); }
+            67% { transform: translate(2px) skewX(2deg); }
+        }
+
+        .nav-dots {
+            position: fixed;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            z-index: 100;
+        }
+
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 0;
+            background: var(--accent-1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid var(--accent-2);
+            animation: neonPulse 1s ease-in-out infinite;
+        }
+
+        @keyframes neonPulse {
+            0%, 100% { 
+                background: var(--accent-1);
+                box-shadow: 0 0 10px var(--accent-1), inset 0 0 10px rgba(255, 42, 109, 0.5);
+            }
+            50% { 
+                background: var(--accent-2);
+                box-shadow: 0 0 20px var(--accent-2), inset 0 0 20px rgba(5, 217, 232, 0.5);
+            }
+        }
+
+        .nav-dot.active {
+            background: var(--accent-1);
+            transform: scale(1.5);
+            box-shadow: 
+                0 0 30px var(--accent-1),
+                0 0 50px var(--accent-2),
+                inset 0 0 20px rgba(255, 42, 109, 0.8);
+            animation: neonPulseActive 0.5s ease-in-out infinite;
+        }
+
+        @keyframes neonPulseActive {
+            0%, 100% { 
+                box-shadow: 
+                    0 0 30px var(--accent-1),
+                    0 0 50px var(--accent-2),
+                    inset 0 0 20px rgba(255, 42, 109, 0.8);
+            }
+            50% { 
+                box-shadow: 
+                    0 0 40px var(--accent-2),
+                    0 0 60px var(--accent-1),
+                    inset 0 0 30px rgba(5, 217, 232, 1);
+            }
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-1), var(--accent-2), var(--accent-3));
+            width: 0;
+            z-index: 101;
+            box-shadow: 0 0 20px var(--accent-2);
+        }
+
+        section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        section:nth-child(1) { background: transparent; }
+        section:nth-child(2) { background: rgba(5, 217, 232, 0.02); }
+        section:nth-child(3) { background: rgba(255, 42, 109, 0.02); }
+        section:nth-child(4) { background: rgba(211, 0, 197, 0.02); }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        li {
+            animation: colorShift 3s ease-in-out infinite;
+            margin-bottom: 12px;
+            padding-left: 24px;
+            position: relative;
+            font-weight: 500;
+        }
+
+        @keyframes colorShift {
+            0%, 100% { color: var(--text-secondary); }
+            33% { color: var(--accent-2); }
+            66% { color: var(--accent-1); }
+        }
+
+        li::before {
+            content: '▶';
+            position: absolute;
+            left: 0;
+            color: var(--accent-2);
+            font-size: 10px;
+            animation: bulletBounce 1s ease-in-out infinite;
+        }
+
+        @keyframes bulletBounce {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(-4px); }
+        }
+
+        li:nth-child(1) { animation-delay: 0s; }
+        li:nth-child(2) { animation-delay: 0.5s; }
+        li:nth-child(3) { animation-delay: 1s; }
+        li:nth-child(4) { animation-delay: 1.5s; }
+
+        p {
+            animation: vhsGlitch 4s ease-in-out infinite;
+        }
+
+        @keyframes vhsGlitch {
+            0%, 100% { 
+                transform: translate(0);
+                filter: blur(0);
+            }
+            25% { 
+                transform: translate(-2px, 2px);
+                filter: blur(1px);
+            }
+            50% { 
+                transform: translate(2px, -2px);
+                filter: blur(0);
+            }
+            75% { 
+                transform: translate(-2px, -2px);
+                filter: blur(1px);
+            }
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        h3 {
+            color: var(--accent-1);
+            text-shadow: 0 0 10px var(--accent-1), 0 0 20px rgba(255, 42, 109, 0.5);
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        strong {
+            color: var(--accent-2);
+            text-shadow: 0 0 10px var(--accent-2);
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar"></div>
+    <div class="nav-dots">
+        <div class="nav-dot active"></div>
+        <div class="nav-dot"></div>
+        <div class="nav-dot"></div>
+        <div class="nav-dot"></div>
+    </div>
+
+    <section>
+        <div class="container text-center">
+            <h1>Происхождение имени Альбина</h1>
+            <h2>Retro Neon Enhanced</h2>
+            <p style="font-size: 14px; margin-top: 24px; letter-spacing: 0.15em;">
+                ▓▓▓ RETRO VHS • GLITCH EFFECTS • NEON GLOW ▓▓▓
+            </p>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="glass-card">
+                <h3>Латинское происхождение</h3>
+                <p>Имя Альбина берет свои корни в латинской культуре. Оно происходит от слова <strong>"albus"</strong>, что означает <strong>"белый"</strong>.</p>
+                <ul>
+                    <li>Символ чистоты и света</li>
+                    <li>Название носило множество святых</li>
+                    <li>Популярно в католических странах</li>
+                    <li>Переводится как "белокурая" или "светлая"</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="glass-card">
+                <h3>Распространение в Европе</h3>
+                <p>В средневековой Европе имя Альбина было особенно популярно среди знатных семей. Оно символизировало аристократизм и благородство.</p>
+                <ul>
+                    <li>Широко использовалось в Италии и Испании</li>
+                    <li>Французский вариант - Aubine</li>
+                    <li>Немецкий вариант - Albina</li>
+                    <li>Встречается в романах и исторических хрониках</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="glass-card">
+                <h3>Современное использование</h3>
+                <p>Сегодня имя Альбина встречается по всему миру. Оно сохраняет свою элегантность и загадочность, оставаясь выбором для родителей, ищущих классику с современным звучанием.</p>
+                <ul>
+                    <li>Популярно в русскоязычных странах</li>
+                    <li>Часто встречается в Албании и Болгарии</li>
+                    <li>Известные личности носят это имя</li>
+                    <li>Ассоциируется с утонченностью и интеллектом</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Обновление прогресс-бара
+        window.addEventListener('scroll', () => {
+            const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollProgress = (window.scrollY / scrollHeight) * 100;
+            document.querySelector('.progress-bar').style.width = scrollProgress + '%';
+        });
+
+        // Клики на точки навигации
+        document.querySelectorAll('.nav-dot').forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                const sections = document.querySelectorAll('section');
+                sections[index].scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // Обновление активной точки при скролле
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section');
+            const dots = document.querySelectorAll('.nav-dot');
+            let current = 0;
+            
+            sections.forEach((section, index) => {
+                if (window.scrollY >= section.offsetTop - 200) {
+                    current = index;
+                }
+            });
+            
+            dots.forEach(dot => dot.classList.remove('active'));
+            dots[current].classList.add('active');
+        });
+    </script>
+</body>
+</html>
