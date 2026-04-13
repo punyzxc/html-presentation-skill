@@ -98,9 +98,69 @@ body { background: var(--bg-dark); }
   --text-primary: #fafafa;
   --text-secondary: #a1a1aa;
   --text-muted: #71717a;
+  --neon-blue: #00d9ff;
+  --neon-purple: #a855f7;
 }
-body { background: var(--bg-dark); }
-/* Без backdrop-filter, без орбов */
+body { 
+  background: var(--bg-dark);
+  position: relative;
+  overflow-x: hidden;
+}
+/* Параллакс фон */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: 
+    radial-gradient(circle at 20% 30%, rgba(168, 85, 247, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(0, 217, 255, 0.08) 0%, transparent 40%);
+  pointer-events: none;
+  z-index: -1;
+  animation: parallaxBg 30s ease-in-out infinite;
+}
+@keyframes parallaxBg {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-50px) scale(1.05); }
+}
+/* Анимированный текст */
+h1, h2 {
+  background: linear-gradient(90deg, var(--text-primary) 0%, var(--neon-blue) 50%, var(--neon-purple) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: textGlow 3s ease-in-out infinite;
+}
+@keyframes textGlow {
+  0%, 100% { filter: drop-shadow(0 0 0px rgba(0, 217, 255, 0)); }
+  50% { filter: drop-shadow(0 0 20px rgba(0, 217, 255, 0.5)); }
+}
+/* 3D карты */
+.glass-card {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+.glass-card:hover {
+  transform: rotateX(5deg) rotateY(-5deg) scale(1.05) translateZ(20px);
+  box-shadow: 0 25px 50px rgba(0, 217, 255, 0.2), 0 0 40px rgba(168, 85, 247, 0.1);
+  border-color: var(--neon-blue);
+}
+/* Стагерированные списки */
+ul li {
+  opacity: 0;
+  animation: slideInWithGlow 0.8s ease-out forwards;
+}
+@keyframes slideInWithGlow {
+  0% { opacity: 0; transform: translateX(-30px); filter: blur(5px); }
+  100% { opacity: 1; transform: translateX(0); filter: blur(0); }
+}
+ul li:nth-child(1) { animation-delay: 0.2s; }
+ul li:nth-child(2) { animation-delay: 0.4s; }
+ul li:nth-child(3) { animation-delay: 0.6s; }
+ul li:nth-child(4) { animation-delay: 0.8s; }
 .bg-wrap { display: none; }
 ```
 
@@ -115,11 +175,53 @@ body { background: var(--bg-dark); }
   --text-primary: #18181b;
   --text-secondary: #52525b;
   --text-muted: #a1a1aa;
+  --soft-blue: #3b82f6;
+  --soft-pink: #ec4899;
+  --soft-purple: #a855f7;
 }
-body { background: #ffffff; color: #18181b; }
+body { 
+  background: linear-gradient(135deg, #ffffff 0%, #f9fafb 50%, #f3f4f6 100%);
+  background-attachment: fixed;
+}
+/* Микропаттерн */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: 
+    radial-gradient(1px 1px at 1px 1px, rgba(0, 0, 0, 0.02), transparent),
+    radial-gradient(1px 1px at 2px 2px, rgba(0, 0, 0, 0.01), transparent);
+  background-size: 20px 20px;
+  pointer-events: none;
+  z-index: -1;
+}
+/* Морфирующие карты */
+.glass-card {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.02);
+}
+.glass-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1), 0 0 40px rgba(59, 130, 246, 0.1);
+  border-color: var(--soft-blue);
+}
+/* Плавающие элементы */
+h1, h2 {
+  animation: floatText 4s ease-in-out infinite;
+}
+@keyframes floatText {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-5px); }
+}
+h1 { animation-duration: 5s; }
+h2 { animation-duration: 4.5s; animation-delay: -0.5s; }
 .bg-wrap { display: none; }
 .nav-dot { background: rgba(0,0,0,0.2); }
-.nav-dot.active { background: var(--accent-1); }
+.nav-dot.active { background: var(--soft-blue); }
 ```
 
 ### 🌈 GRADIENT MESH
@@ -131,12 +233,56 @@ body { background: #ffffff; color: #18181b; }
   --glass-border: rgba(255,255,255,0.2);
 }
 body { 
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+  background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #4facfe, #00f2fe);
+  background-size: 400% 400%;
   background-attachment: fixed;
+  animation: meshGradient 5s ease infinite;
 }
-/* Разные градиенты для слайдов */
-section:nth-child(2n) { background: linear-gradient(135deg, #f093fb, #f5576c); }
-section:nth-child(3n) { background: linear-gradient(135deg, #4facfe, #00f2fe); }
+@keyframes meshGradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+/* Волны */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 1200 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,20 Q300,50 600,20 T1200,20 L1200,120 L0,120 Z' fill='rgba(255,255,255,0.05)'/%3E%3C/svg%3E");
+  background-size: 600px 100px;
+  background-repeat: repeat-x;
+  pointer-events: none;
+  z-index: 1;
+  animation: waveAnimation 20s linear infinite;
+}
+@keyframes waveAnimation {
+  0% { background-position: 0 0; }
+  100% { background-position: 600px 0; }
+}
+/* Карты с клип-пас */
+.glass-card {
+  background: var(--glass);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+  overflow: hidden;
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%);
+}
+.glass-card:hover {
+  transform: scale(1.05) rotateX(2deg) rotateY(-2deg);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+/* Морфинг текста */
+h1, h2 {
+  animation: morphText 4s ease-in-out infinite;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+@keyframes morphText {
+  0%, 100% { transform: scale(1) skewX(0deg); filter: drop-shadow(0 0 0px rgba(255, 255, 255, 0)); }
+  50% { transform: scale(1.02) skewX(2deg); filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.4)); }
+}
 .bg-wrap { display: none; }
 ```
 
@@ -147,15 +293,51 @@ section:nth-child(3n) { background: linear-gradient(135deg, #4facfe, #00f2fe); }
   --text-primary: #2d3436;
   --text-secondary: #636e72;
   --text-muted: #b2bec3;
+  --shadow-light: #ffffff;
+  --shadow-dark: #b8bec4;
 }
-body { background: #e0e5ec; }
+body { 
+  background: linear-gradient(135deg, #e0e5ec 0%, #d5dce3 50%, #e0e5ec 100%);
+  position: relative;
+}
+/* Инвертирующиеся карты */
 .glass-card {
-  background: #e0e5ec;
+  background: var(--bg-dark);
   border: none;
-  box-shadow: 8px 8px 16px #b8bec4, -8px -8px 16px #ffffff;
+  border-radius: 20px;
+  box-shadow: 12px 12px 24px var(--shadow-dark), -12px -12px 24px var(--shadow-light);
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+  overflow: hidden;
 }
 .glass-card:hover {
-  box-shadow: 12px 12px 24px #b8bec4, -12px -12px 24px #ffffff;
+  box-shadow: inset 12px 12px 24px var(--shadow-dark), inset -12px -12px 24px var(--shadow-light);
+  transform: scale(0.95);
+}
+/* Анимированные заголовки */
+.glass-card h4 {
+  animation: titlePulse 3s ease-in-out infinite;
+}
+@keyframes titlePulse {
+  0%, 100% { color: var(--text-primary); text-shadow: none; }
+  50% { color: #a29bfe; text-shadow: 0 0 20px rgba(162, 155, 254, 0.3); }
+}
+/* Клип-пас элементы */
+.badge {
+  clip-path: polygon(20px 0, 100% 0, calc(100% - 20px) 100%, 0 100%);
+  animation: badgeFlip 2s ease-in-out infinite;
+}
+@keyframes badgeFlip {
+  0%, 100% { transform: rotateX(0deg); }
+  50% { transform: rotateX(10deg); }
+}
+/* Текст с морфингом */
+p {
+  animation: morphLine 4s ease-in-out infinite;
+}
+@keyframes morphLine {
+  0%, 100% { letter-spacing: 0; transform: skewX(0deg); }
+  50% { letter-spacing: 2px; transform: skewX(-2deg); }
 }
 .bg-wrap { display: none; }
 .nav-dot { background: #d1d5db; box-shadow: 2px 2px 4px #b8bec4, -2px -2px 4px #fff; }
@@ -168,19 +350,75 @@ body { background: #e0e5ec; }
   --text-primary: #ffffff;
   --text-secondary: #ffffff;
   --accent-1: #ff0000;
+  --accent-2: #ffff00;
   --glass: transparent;
   --glass-border: #ff0000;
 }
-body { background: #000; font-family: 'Space Mono', monospace; }
+body { 
+  background: #000000;
+  font-family: 'Space Mono', monospace;
+  position: relative;
+  overflow-x: hidden;
+}
+/* Анимированная сетка */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: 
+    linear-gradient(90deg, rgba(255, 0, 0, 0.1) 1px, transparent 1px),
+    linear-gradient(rgba(255, 0, 0, 0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+  pointer-events: none;
+  z-index: -1;
+  animation: gridShift 20s linear infinite;
+}
+@keyframes gridShift {
+  0% { background-position: 0 0; }
+  100% { background-position: 20px 20px; }
+}
+/* Пульсирующие заголовки */
+h1, h2 {
+  text-transform: uppercase;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  animation: brutalPulse 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+  text-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+}
+h1 { animation-duration: 1s; }
+h2 { animation-duration: 0.8s; }
+@keyframes brutalPulse {
+  0%, 100% { transform: scale(1) skewX(0deg); text-shadow: 0 0 5px rgba(255, 0, 0, 0.3); }
+  50% { transform: scale(1.05) skewX(-2deg); text-shadow: 0 0 20px rgba(255, 0, 0, 0.8), 0 0 40px rgba(255, 255, 0, 0.4); }
+}
+/* Глиттер и карты */
 .glass-card {
   background: transparent;
   border: 3px solid var(--accent-1);
   border-radius: 0;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.2s ease;
 }
-h1, h2, h3 { text-transform: uppercase; font-weight: 900; letter-spacing: 0.05em; }
+.glass-card:hover {
+  border-color: var(--accent-2);
+  box-shadow: 0 0 30px rgba(255, 0, 0, 0.6), inset 0 0 0 3px rgba(255, 255, 0, 0.5);
+  transform: scale(0.98) rotate(-1deg);
+}
+/* Резкие анимации списков */
+ul li {
+  animation: jumpIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+@keyframes jumpIn {
+  0% { opacity: 0; transform: translateY(-20px) rotateX(90deg); }
+  50% { transform: translateY(5px); }
+  100% { opacity: 1; transform: translateY(0) rotateX(0deg); }
+}
+ul li:nth-child(1) { animation-delay: 0.1s; }
+ul li:nth-child(2) { animation-delay: 0.2s; }
+ul li:nth-child(3) { animation-delay: 0.3s; }
+ul li:nth-child(4) { animation-delay: 0.4s; }
 .bg-wrap, .bg-grid { display: none; }
-/* Без анимаций или резкие */
-.animate-on-view { animation: none; opacity: 1; }
 ```
 
 ### 🏢 CORPORATE
@@ -193,11 +431,59 @@ h1, h2, h3 { text-transform: uppercase; font-weight: 900; letter-spacing: 0.05em
   --text-primary: #1e293b;
   --text-secondary: #475569;
   --text-muted: #94a3b8;
-  --accent-1: #1e40af;
-  --accent-2: #3b82f6;
+  --accent-blue: #1e40af;
+  --accent-sky: #3b82f6;
 }
-body { background: #f8fafc; }
-.glass-card { box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+body { 
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 50%, #e0f2fe 100%);
+  background-attachment: fixed;
+}
+/* Морфирующие карты */
+.glass-card {
+  background: var(--glass);
+  border: 2px solid var(--glass-border);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+  overflow: hidden;
+}
+.glass-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08), 0 0 40px rgba(30, 64, 175, 0.1);
+  border-color: var(--accent-blue);
+}
+/* Градиентный текст */
+h1, h2 {
+  background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-sky) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: textGradientShift 4s ease-in-out infinite;
+}
+@keyframes textGradientShift {
+  0%, 100% { background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-sky) 100%); }
+  50% { background: linear-gradient(45deg, var(--accent-sky) 0%, var(--text-primary) 100%); }
+}
+/* Списки */
+ul li {
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  padding-left: 28px;
+}
+ul li:hover {
+  transform: translateX(8px);
+  color: var(--accent-blue);
+  padding-left: 36px;
+}
+ul li::before {
+  transition: all 0.3s ease;
+  background: var(--accent-blue);
+  box-shadow: 0 2px 8px rgba(30, 64, 175, 0.2);
+}
+ul li:hover::before {
+  box-shadow: 0 4px 16px rgba(30, 64, 175, 0.4);
+  transform: scale(1.2);
+}
 .bg-wrap { display: none; }
 ```
 
@@ -213,17 +499,78 @@ body { background: #f8fafc; }
   --glass: rgba(255,255,255,0.03);
   --glass-border: rgba(5,217,232,0.3);
 }
-body { background: #0f0f23; }
-h1, h2 { 
-  text-shadow: 0 0 10px var(--accent-2), 0 0 20px var(--accent-2), 0 0 40px var(--accent-2); 
+body { 
+  background: #0f0f23;
+  position: relative;
+  overflow-x: hidden;
 }
-.gradient-text {
-  background: linear-gradient(90deg, #ff2a6d, #05d9e8, #d300c5);
-  animation: gradientShift 3s ease infinite;
+/* Сканлайны */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(255, 255, 255, 0.03) 2px,
+    rgba(255, 255, 255, 0.03) 4px
+  );
+  pointer-events: none;
+  z-index: -1;
+  animation: scanlineFlicker 0.15s infinite;
 }
-@keyframes gradientShift {
-  0%, 100% { filter: hue-rotate(0deg); }
-  50% { filter: hue-rotate(30deg); }
+@keyframes scanlineFlicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.95; }
+}
+/* Мерцающие заголовки */
+h1, h2 {
+  text-shadow: 0 0 10px var(--accent-2), 0 0 20px var(--accent-2), 0 0 40px var(--accent-2);
+  animation: neonFlicker 0.15s ease-in-out infinite;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+}
+@keyframes neonFlicker {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+    text-shadow: 0 0 10px var(--accent-2), 0 0 20px var(--accent-2), 0 0 40px var(--accent-2);
+    opacity: 1;
+  }
+  20%, 24%, 55% {
+    text-shadow: 0 0 5px var(--accent-2), 0 0 10px var(--accent-2);
+    opacity: 0.8;
+  }
+}
+h1 { color: var(--accent-1); animation-duration: 0.13s; }
+h2 { color: var(--accent-2); animation-duration: 0.15s; }
+/* Карты с RGB сдвигом */
+.glass-card {
+  background: var(--glass);
+  backdrop-filter: blur(5px);
+  border: 2px solid var(--glass-border);
+  border-radius: 0;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 20px var(--accent-2), inset 0 0 20px rgba(5, 217, 232, 0.1);
+  transition: all 0.3s ease;
+}
+.glass-card:hover {
+  border-color: var(--accent-1);
+  box-shadow: 0 0 30px var(--accent-1), 0 0 50px var(--accent-2), inset 0 0 30px rgba(255, 42, 109, 0.2);
+  animation: glitchCard 0.2s ease-in-out;
+}
+@keyframes glitchCard {
+  0%, 33%, 66%, 100% { transform: translate(0) skewX(0deg); }
+  34% { transform: translate(-2px) skewX(-2deg); }
+  67% { transform: translate(2px) skewX(2deg); }
+}
+/* РГБ гличчы */
+ul li {
+  animation: colorShift 3s ease-in-out infinite;
+}
+@keyframes colorShift {
+  0%, 100% { color: var(--text-secondary); }
+  50% { color: var(--accent-2); }
 }
 /* Сетка на фоне */
 .bg-grid {
