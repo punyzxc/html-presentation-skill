@@ -31,7 +31,7 @@ argument-hint: "Тема презентации"
 
 ## ⚠️ ГЛАВНОЕ ПРАВИЛО: НЕ ГОЛОГО ТЕКСТА!
 
-> **КРИТИЧНО:** Никогда просто текст на фоне без контейнера!
+> **КРИТИЧНО:** Никогда просто текст на фоне без контейнера! Все контейнеры ДОЛЖНЫ менять цвет при переключении темы!
 
 ❌ **ЗАПРЕЩЕНО:**
 ```html
@@ -51,6 +51,28 @@ argument-hint: "Тема презентации"
     <p>Текст в красивом контейнере</p>
   </div>
 </section>
+```
+
+### ⚡ ВАЖНО: CSS переменные для динамической смены цветов
+
+**Все цвета рамок ДОЛЖНЫ быть CSS переменные**, которые меняются при переключении темы:
+
+```css
+:root {
+  --border-color: rgba(59, 130, 246, 0.2);
+  --surface: #1a2332;
+}
+
+html.light-theme {
+  --border-color: rgba(37, 99, 235, 0.15);
+  --surface: #ffffff;
+}
+
+.glass-card {
+  border: 2px solid var(--border-color);
+  background: var(--surface);
+  transition: all 0.3s ease;
+}
 ```
 
 ### Доступные контейнеры
@@ -575,31 +597,58 @@ background-image: linear-gradient(transparent 95%, rgba(5,217,232,0.1) 95%),
 
 ---
 
-## 🎨 SVG Иконки (анимированные)
+## 🎨 SVG Иконки (ВМЕСТО ЭМОДЗИ!)
 
-> Использовать **inline SVG** — работает офлайн, можно анимировать через CSS.
+> ⚠️ **КРИТИЧНО:** НЕ использовать эмодзи! Только **inline SVG иконки** по следующим причинам:
+> - Эмодзи меняются в зависимости от ОС и браузера
+> - SVG работает одинаково везде
+> - SVG легче анимировать и кастомизировать
+> - SVG выглядит профессиональнее
 
 ### Базовая структура иконки в круге
 
 ```html
-<div class="icon-circle">
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<div class="card-icon">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <!-- SVG path здесь -->
   </svg>
 </div>
 ```
 
 ```css
-.icon-circle {
+.card-icon {
   width: 56px;
   height: 56px;
-  border-radius: 50%;
-  background: var(--gradient);
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  margin: 0 auto 1rem;
 }
+
+.card-icon svg {
+  width: 60%;
+  height: 60%;
+  stroke: white;
+  fill: none;
+  stroke-width: 2;
+}
+```
+
+### ✅ Правильное использование SVG
+
+```html
+<!-- ПРАВИЛЬНО: используем SVG иконку -->
+<div class="card-item">
+  <div class="card-icon">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <polyline points="20 6 9 17 4 12"></polyline>
+    </svg>
+  </div>
+  <div class="card-title">Проверка</div>
+  <div class="card-text">Проверьте логику работы</div>
+</div>
 ```
 
 ### Популярные иконки (готовые SVG)
@@ -1563,17 +1612,117 @@ p  { font-size: clamp(1rem, 1.5vw, 1.2rem); }
 ## 📌 Финальные советы
 
 1. **Не бойся карточек** — лучше много красивых карточек, чем пустой текст
-2. **Используй иконки** — SVG иконки добавляют профессионализм
+2. **Используй иконки** — ТОЛЬКО SVG иконки (не эмодзи!)
 3. **Анимируй умеренно** — эффект должен подчёркивать, а не отвлекать
-4. **Тестируй навигацию** — стрелки, пробел, touch должны работать
-5. **Проверяй читаемость** — текст должен быть контрастным
+4. **✅ Тестируй навигацию** — стрелки клавиатуры, кнопки, скролл, touch должны работать
+5. **✅ Масштаб и читаемость** — используй `clamp()` для адаптивного размера шрифта и элементов
 6. **Тестируй на мобильных** — открой DevTools → 375px ширина
 7. **Проверяй всех авторов** — footer, титульный, финальный слайды
+8. **✅ Темы меняют ALL цвета** — все рамки, карточки, текст должны менять цвет при переключении темы
+
+---
+
+## ⚡ КРИТИЧНЫЕ ТРЕБОВАНИЯ К НАВИГАЦИИ
+
+### Клавиатура
+```javascript
+// ↑ ↓ — переключение слайдов
+// Пробел — следующий слайд
+// Ctrl+T — переключение темы
+```
+
+### Мышь и Touch
+```javascript
+// Кнопки Prev/Next должны работать безотказно
+// Скролл должен переключать слайды (с debounce 800ms)
+// Должна быть защита от множественного переключения
+```
+
+### Рекомендуемое решение
+```javascript
+let isScrolling = false;
+let scrollTimeout = null;
+
+function goToSlide(index) {
+    if (index >= 0 && index < totalSlides && !isScrolling) {
+        isScrolling = true;
+        currentSlide = index;
+        sections[currentSlide].scrollIntoView({ behavior: 'smooth' });
+        
+        setTimeout(() => {
+            isScrolling = false;
+        }, 1000); // debounce 1 секунда
+    }
+}
+
+document.addEventListener('wheel', (e) => {
+    if (isScrolling) return;
+    
+    if (e.deltaY > 30) goToSlide(currentSlide + 1);
+    if (e.deltaY < -30) goToSlide(currentSlide - 1);
+}, { passive: true });
+```
+
+---
+
+## ⚡ КРИТИЧНЫЕ ТРЕБОВАНИЯ К МАСШТАБУ
+
+### Используй `clamp()` для всех размеров
+
+❌ **НЕПРАВИЛЬНО:**
+```css
+h1 { font-size: 2.5rem; }
+p { font-size: 1rem; }
+```
+
+✅ **ПРАВИЛЬНО:**
+```css
+h1 { font-size: clamp(1.8rem, 7vw, 3.2rem); }
+p { font-size: clamp(0.9rem, 1.5vw, 1.1rem); }
+
+.card-icon { width: clamp(48px, 8vw, 64px); }
+.padding { padding: clamp(1.2rem, 3vw, 1.8rem); }
+.gap { gap: clamp(1.2rem, 3vw, 2rem); }
+```
+
+### Эффект
+- На маленеких экранах: минимальный размер (1.8rem)
+- На среднем экране: масштабируется в % от viewport (7vw)
+- На больших экранах: максимальный размер (3.2rem)
+
+---
+
+## ⚡ КРИТИЧНЫЕ ТРЕБОВАНИЯ К ТЕМАМ
+
+### ВСЕ цвета через CSS переменные
+
+```css
+:root {
+    --bg: #0f172a;
+    --surface: #1a2332;
+    --border-color: rgba(59, 130, 246, 0.2);
+    --text-main: #f1f5f9;
+}
+
+html.light-theme {
+    --bg: #f8fafc;
+    --surface: #ffffff;
+    --border-color: rgba(37, 99, 235, 0.15);
+    --text-main: #0f172a;
+}
+
+.card {
+    background: var(--surface);
+    border: 2px solid var(--border-color);
+    color: var(--text-main);
+    transition: all 0.3s ease; /* ← обязательна! */
+}
+```
 
 ---
 
 **Разработчик:** Актанов Д., ИМ-32, Margulan University (MU)  
-**Версия:** 2.2 (обновлено с контейнерами и SVG)  
+**Версия:** 3.0 (SVG иконки, адаптивный масштаб, улучшенная навигация, динамические темы)  
 **Обновлено:** 2026
 
 ---
