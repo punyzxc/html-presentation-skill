@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Этапы подготовки реферата</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* DARK THEME */
+            --bg: #0f172a;
+            --surface: #1a2332;
+            --surface-light: #1e293b;
+            --text-main: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --text-tertiary: #94a3b8;
+            --accent-primary: #3b82f6;
+            --accent-secondary: #8b5cf6;
+            --accent-tertiary: #06b6d4;
+            --accent-quaternary: #ec4899;
+            --border-color: rgba(59, 130, 246, 0.2);
+            --success: #10b981;
+            --warning: #f59e0b;
+        }
+
+        html.light-theme {
+            /* LIGHT THEME */
+            --bg: #f8fafc;
+            --surface: #ffffff;
+            --surface-light: #f1f5f9;
+            --text-main: #0f172a;
+            --text-secondary: #334155;
+            --text-tertiary: #64748b;
+            --accent-primary: #2563eb;
+            --accent-secondary: #7c3aed;
+            --accent-tertiary: #0891b2;
+            --accent-quaternary: #db2777;
+            --border-color: rgba(37, 99, 235, 0.15);
+            --success: #059669;
+            --warning: #d97706;
+        }
+
+        html {
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg);
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                        color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* ANIMATED BACKGROUND */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.06) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(6, 182, 212, 0.05) 0%, transparent 50%);
+            animation: backgroundShift 15s ease-in-out infinite;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        @keyframes backgroundShift {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 1.2; }
+        }
+
+        section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+            padding: 3rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, 
+                rgba(59, 130, 246, 0.02) 0%,
+                rgba(139, 92, 246, 0.02) 50%,
+                rgba(6, 182, 212, 0.02) 100%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .slide-content {
+            max-width: 950px;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide-header {
+            margin-bottom: 2.5rem;
+        }
+
+        .slide-number {
+            display: inline-block;
+            padding: 0.6rem 1.2rem;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: white;
+        }
+
+        h1 {
+            font-size: clamp(1.8rem, 7vw, 3.2rem);
+            line-height: 1.25;
+            margin-bottom: 1.2rem;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-tertiary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            font-size: clamp(0.95rem, 1.8vw, 1.15rem);
+            color: var(--text-secondary);
+            max-width: 650px;
+            line-height: 1.6;
+        }
+
+        .accent-line {
+            width: 50px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-tertiary));
+            border-radius: 2px;
+            margin: 1.8rem 0;
+        }
+
+        /* CARDS */
+        .card {
+            background: var(--surface);
+            border: 2px solid var(--border-color);
+            border-radius: 14px;
+            padding: clamp(1.2rem, 3vw, 1.8rem);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+        }
+
+        .card:hover {
+            border-color: var(--accent-primary);
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.15);
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.8rem;
+            margin: 2rem 0;
+        }
+
+        .card-item {
+            background: linear-gradient(135deg, var(--surface), var(--surface-light));
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: clamp(1.2rem, 3vw, 1.6rem);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .card-item:hover {
+            border-color: var(--accent-primary);
+            transform: translateY(-5px) scale(1.01);
+            box-shadow: 0 15px 35px rgba(59, 130, 246, 0.15);
+        }
+
+        .card-icon {
+            width: clamp(50px, 8vw, 64px);
+            height: clamp(50px, 8vw, 64px);
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+        }
+
+        .card-icon svg {
+            width: 60%;
+            height: 60%;
+            stroke: white;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .card-title {
+            font-size: clamp(1rem, 2vw, 1.15rem);
+            font-weight: 700;
+            margin-bottom: 0.6rem;
+            color: var(--text-main);
+        }
+
+        .card-text {
+            font-size: clamp(0.85rem, 1.5vw, 0.95rem);
+            color: var(--text-tertiary);
+            line-height: 1.6;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, 
+                rgba(59, 130, 246, 0.08),
+                rgba(139, 92, 246, 0.08));
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-box:hover {
+            border-color: var(--accent-primary);
+            transform: translateY(-4px);
+        }
+
+        .stat-number {
+            font-size: clamp(1.8rem, 4vw, 2.2rem);
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-tertiary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-size: clamp(0.8rem, 1.2vw, 0.9rem);
+            color: var(--text-tertiary);
+            margin-top: 0.6rem;
+        }
+
+        /* TIMELINE */
+        .timeline {
+            position: relative;
+            padding: 1.5rem 0 1.5rem 2.5rem;
+            margin: 2rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 6px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, var(--accent-primary), var(--accent-tertiary));
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -20px;
+            top: 4px;
+            width: 12px;
+            height: 12px;
+            background: var(--accent-primary);
+            border-radius: 50%;
+            border: 3px solid var(--bg);
+            box-shadow: 0 0 0 2px var(--accent-primary);
+        }
+
+        .timeline-label {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 0.3rem;
+        }
+
+        .timeline-title {
+            font-size: clamp(1rem, 2vw, 1.15rem);
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 0.4rem;
+        }
+
+        .timeline-text {
+            font-size: clamp(0.85rem, 1.5vw, 0.95rem);
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* LIST */
+        .styled-list {
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+
+        .styled-list li {
+            padding: 0.7rem 0 0.7rem 1.8rem;
+            position: relative;
+            color: var(--text-secondary);
+            line-height: 1.65;
+            font-size: clamp(0.85rem, 1.5vw, 0.95rem);
+        }
+
+        .styled-list li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent-primary);
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        /* AUTHORS */
+        .authors-showcase {
+            display: flex;
+            justify-content: center;
+            gap: clamp(1.2rem, 3vw, 2rem);
+            flex-wrap: wrap;
+            margin: 2.5rem 0;
+        }
+
+        .author-badge {
+            background: linear-gradient(135deg, var(--surface), var(--surface-light));
+            border: 2px solid var(--accent-primary);
+            border-radius: 14px;
+            padding: clamp(1.2rem, 3vw, 1.8rem);
+            text-align: center;
+            min-width: 140px;
+            transition: all 0.3s ease;
+        }
+
+        .author-badge:hover {
+            transform: scale(1.06);
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.2);
+        }
+
+        .author-letter {
+            width: clamp(50px, 10vw, 60px);
+            height: clamp(50px, 10vw, 60px);
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: clamp(1.5rem, 3vw, 1.8rem);
+            font-weight: 800;
+            color: white;
+            margin: 0 auto 0.8rem;
+        }
+
+        .author-name {
+            font-size: clamp(0.95rem, 1.8vw, 1.1rem);
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .author-title {
+            font-size: clamp(0.8rem, 1.5vw, 0.9rem);
+            color: var(--text-tertiary);
+            margin-top: 0.3rem;
+        }
+
+        /* NAVIGATION */
+        .nav-bar {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 0.8rem;
+            align-items: center;
+            background: var(--surface);
+            border: 2px solid var(--border-color);
+            border-radius: 50px;
+            padding: 0.8rem 1.2rem;
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .nav-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            cursor: pointer;
+            font-size: 1.2rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+
+        .nav-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.5);
+        }
+
+        .nav-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* NAVIGATION DOTS */
+        .nav-dots {
+            position: fixed;
+            right: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            z-index: 100;
+        }
+
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--border-color);
+            border: 2px solid var(--accent-primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-dot:hover {
+            background: var(--accent-primary);
+            transform: scale(1.2);
+        }
+
+        .nav-dot.active {
+            background: var(--accent-primary);
+            width: 32px;
+            border-radius: 6px;
+        }
+
+        @media (max-width: 768px) {
+            .nav-dots {
+                right: 1rem;
+                gap: 0.6rem;
+            }
+            .nav-dot {
+                width: 10px;
+                height: 10px;
+            }
+        }
+
+        .theme-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid var(--accent-primary);
+            background: transparent;
+            color: var(--accent-primary);
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-btn:hover {
+            transform: rotate(180deg);
+            background: var(--accent-primary);
+            color: white;
+        }
+
+        .theme-btn:active {
+            transform: rotate(180deg) scale(0.9);
+        }
+
+        /* PROGRESS */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-tertiary));
+            z-index: 200;
+            transition: width 0.3s ease;
+        }
+
+        .slide-info {
+            position: fixed;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: var(--surface);
+            border: 2px solid var(--border-color);
+            border-radius: 40px;
+            padding: 0.7rem 1.2rem;
+            font-size: clamp(0.8rem, 1.5vw, 0.9rem);
+            font-weight: 600;
+            color: var(--text-secondary);
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            section {
+                padding: 2.5rem 1.2rem;
+            }
+
+            h1 {
+                font-size: 1.6rem;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+                gap: 1.2rem;
+            }
+
+            .nav-bar {
+                bottom: 1rem;
+                padding: 0.7rem 1rem;
+                gap: 0.6rem;
+            }
+
+            .nav-btn, .theme-btn {
+                width: 36px;
+                height: 36px;
+                font-size: 1rem;
+            }
+
+            .slide-info {
+                top: 1rem;
+                right: 1rem;
+                padding: 0.6rem 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            section {
+                padding: 2rem 1rem;
+            }
+
+            .slide-header {
+                margin-bottom: 1.5rem;
+            }
+
+            .authors-showcase {
+                gap: 0.8rem;
+            }
+
+            .author-badge {
+                min-width: 120px;
+            }
+
+            .timeline {
+                padding-left: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar"></div>
+    <div class="slide-info">
+        <span class="current-slide">1</span> / <span class="total-slides">12</span>
+    </div>
+
+    <!-- SLIDE 1: TITLE -->
+    <section>
+        <div class="slide-content">
+            <div class="slide-header">
+                <div class="slide-number">Презентация</div>
+                <h1>Этапы подготовки реферата</h1>
+                <div class="accent-line"></div>
+                <p class="subtitle">Полное руководство по структурированию и написанию качественной академической работы</p>
+            </div>
+
+            <div class="authors-showcase">
+                <div class="author-badge">
+                    <div class="author-letter">А</div>
+                    <div class="author-name">Актанов Д.</div>
+                    <div class="author-title">ИМ-32</div>
+                </div>
+                <div class="author-badge">
+                    <div class="author-letter">А</div>
+                    <div class="author-name">Ашенов К.</div>
+                    <div class="author-title">ИМ-32</div>
+                </div>
+                <div class="author-badge">
+                    <div class="author-letter">Т</div>
+                    <div class="author-name">Тарасов С.</div>
+                    <div class="author-title">ИМ-32</div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 2.5rem;">
+                <p style="font-size: clamp(0.9rem, 1.5vw, 1rem); color: var(--text-tertiary);">Margulan University • 2026</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 2: STAGE 1 -->
+    <section>
+        <div class="slide-content">
+            <div class="slide-header">
+                <div class="slide-number">Этап 1</div>
+                <h1>Выбор темы и формулировка цели</h1>
+                <div class="accent-line"></div>
+            </div>
+
+            <div class="cards-grid">
+                <div class="card-item">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="1"></circle>
+                            <circle cx="19" cy="4" r="1"></circle>
+                            <circle cx="5" cy="20" r="1"></circle>
+                            <path d="M6.5 17.5L12.5 5.5M17.5 6.5L5.5 18.5"></path>
+                        </svg>
+                    </div>
+                    <div class="card-title">Определение направления</div>
+                    <div class="card-text">Тема должна быть актуальной, интересной и достаточно узкой для глубокого изучения</div>
+                </div>
+                <div class="card-item">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                        </svg>
+                    </div>
+                    <div class="card-title">Формулировка цели</div>
+                    <div class="card-text">Четко сформулируйте, что вы хотите достичь своей работой в 1-2 предложениях</div>
+                </div>
+                <div class="card-item">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                    </div>
+                    <div class="card-title">Проверка доступности</div>
+                    <div class="card-text">Убедитесь, что есть достаточно источников информации по выбранной теме</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2 style="margin-bottom: 1rem; font-size: clamp(1.1rem, 2vw, 1.25rem);">Критерии хорошей темы:</h2>
+                <ul class="styled-list">
+                    <li>Соответствует программе курса</li>
+                    <li>Имеет четкие временные рамки (если требуется)</li>
+                    <li>Достаточно узкая для детального анализа</li>
+                    <li>Интересна автору и преподавателю</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 3: STAGE 2 -->
+    <section>
+        <div class="slide-content">
+            <div class="slide-header">
+                <div class="slide-number">Этап 2</div>
+                <h1>Подбор и анализ источников</h1>
+                <div class="accent-line"></div>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-label">ШАГ 1</div>
+                    <div class="timeline-title">Поиск источников</div>
+                    <div class="timeline-text">Используйте библиотеки, онлайн-базы данных, научные журналы</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-label">ШАГ 2</div>
+                    <div class="timeline-title">Оценка качества</div>
+                    <div class="timeline-text">Проверьте авторитетность источника, дату публикации, релевантность</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-label">ШАГ 3</div>
+                    <div class="timeline-title">Выбор материалов</div>
+                    <div class="timeline-text">Отберите самые подходящие источники для вашей работы (минимум 5-10)</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-label">ШАГ 4</div>
+                    <div class="timeline-title">Углубленный анализ</div>
+                    <div class="timeline-text">Изучите содержание, сделайте заметки, выделите ключевые идеи</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 4: STAGE 3 -->
+    <section>
+        <div class="slide-content">
+            <div class="slide-header">
+                <div class="slide-number">Этап 3</div>
+                <h1>Составление плана работы</h1>
+                <div class="accent-line"></div>
+            </div>
+
+            <div class="cards-grid">
+                <div class="card-item">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="8" y1="6" x2="21" y2="6"></line>
+                            <line x1="8" y1="12" x2="21" y2="12"></line>
+                            <line x1="8" y1="18" x2="21" y2="18"></line>
+                            <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                            <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                            <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                        </svg>
+                    </div>
+                    <div class="card-title">Структура плана</div>
+                    <div class="card-text"><strong>Введение</strong> (10-15%)<br><strong>Основная часть</strong> (70-80%)<br><strong>Заключение</strong> (10-15%)</div>
+                </div>
+                <div class="card-item">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="14" width="7" height="7"></rect>
+                            <rect x="3" y="14" width="7" height="7"></rect>
+                        </svg>
+                    </div>
+                    <div class="card-title">Разделение на подразделы</div>
+                    <div class="card-text">Организуйте основную часть на 2-4 логически связанных раздела или главы</div>
+                </div>
+                <div class="card-item">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                        </svg>
+                    </div>
+                    <div class="card-title">Детализация пунктов</div>
+                    <div class="card-text">Для каждого раздела выделите ключевые вопросы, которые будут рассмотрены</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 5: WRITING PROCESS -->
+    <section>
+        <div class="slide-content">
+            <div class="slide-header">
+                <div class="slide-number">Этап 4</div>
+                <h1>Процесс написания текста</h1>
+                <div class="accent-line"></div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="card-icon" style="margin-bottom: 1rem; width: 48px; height: 48px; margin-left: auto; margin-right: auto;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                        </svg>
+                    </div>
+                    <div class="card-title" style="color: var(--text-main); font-weight: 600;">Черновик</div>
+                    <div class="stat-label">Напишите свободно, без редактирования</div>
+                </div>
+                <div class="stat-box">
+                    <div class="card-icon" style="margin-bottom: 1rem; width: 48px; height: 48px; margin-left: auto; margin-right: auto;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.35-4.35"></path>
+                        </svg>
+                    </div>
+                    <div class="card-title" style="color: var(--text-main); font-weight: 600;">Проверка</div>
+                    <div class="stat-label">Проверьте логику и соответствие плану</div>
+                </div>
+                <div class="stat-box">
+                    <div class="card-icon" style="margin-bottom: 1rem; width: 48px; height: 48px; margin-left: auto; margin-right: auto;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="12 2 15.09 10.26 24 10.5 17.42 16.91 19.79 25.59 12 20.16 4.21 25.59 6.58 16.91 0 10.5 8.91 10.26 12 2"></polygon>
+                        </svg>
+                    </div>
+                    <div class="card-title" style="color: var(--text-main); font-weight: 600;">Редактирование</div>
+                    <div class="stat-label">Улучшите стиль и грамматику</div>
+                </div>
+                <div class="stat-box">
+                    <div class="card-icon" style="margin-bottom: 1rem; width: 48px; height: 48px; margin-left: auto; margin-right: auto;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <polyline points="19 12 12 19 5 12"></polyline>
+                        </svg>
+                    </div>
+                    <div class="card-title" style="color: var(--text-main); font-weight: 600;">Финализация</div>
+                    <div class="stat-label">Отформатируйте согласно требованиям</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 6: INTRODUCTION -->
+    <section>
+        <div class="slide-content">
+            <div class="slide-header">
+                <div class="slide-number">Структура: Введение</div>
+                <h1>Правильное введение</h1>
+                <div class="accent-line"></div>
+            </div>
+
+            <div class="card">
+                <h2 style="margin-bottom: 1rem; font-size: clamp(1.1rem, 2vw, 1.25rem);">Объем: 5-10% от общего текста работы</h2>
+                <ul class="styled-list">
+                    <li>Обозначьте актуальность и значимость темы</li>
+                    <li>Сформулируйте цель и задачи работы</li>
+                    <li>Определите предмет и объект исследования</li>
+                    <li>Кратко опишите используемые методы</li>
+                    <li>Обозначьте структуру работы</li>
+                </ul>
+            </div>
+
+            <div class="stat-box" style="margin-top: 2rem;">
+                <strong style="color: var(--text-main);">Совет:</strong> Введение часто пишут последним, когда уже ясна вся структура работы
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 7: MAIN BODY -->
+    <section>
+        <div class="slide-content">
+            <div class="slide-header">
+                <div class="slide-number">Структура: Основная часть</div>
+                <h1>Содержание основной части</h1>
+                <div class="accent-line"></div>
+            </div>
+
+            <div class="cards-grid">
+                <div class="card">
+                    <h3 style="color: var(--accent-primary); margin-bottom: 1rem; font-size: clamp(1rem, 2vw, 1.15rem);">Объем</h3>
+                    <p style="margin: 0; font-size: clamp(0.9rem, 1.5vw, 1rem); color: var(--text-secondary);">70-80% от общего объема работы - самая важная часть</p>
+                </div>
+                <div class="card">
+                    <h3 style="color: var(--accent-primary); margin-bottom: 1rem; font-size: clamp(1rem, 2vw, 1.15rem);">Организация</h3>
+                    <p style="margin: 0; font-size: clamp(0.9rem, 1.5vw, 1rem); color: var(--text-secondary);">Разделена на 2-4 раздела с логической последовательностью</p>
+                </div>
+            </div>
+
+            <div class="card" style="margin-top: 2rem;">
+                <h3 style="margin-bottom: 1rem; font-size: clamp(1.1rem, 2vw, 1.25rem);">Требования к содержанию:</h3>
+                <ul class="styled-list">
+                    <li>Глубокий анализ и аргументация каждого пункта</li>
+                    <li>Все утверждения должны быть подкреплены источниками</li>
+                    <li>Собственная интерпретация и критический анализ</li>
+                    <li>Логические переходы между секциями</li>
+                    <li>Избегайте выводов - они идут в заключение</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 8: CONCLUSION -->
+    <section>
+        <div class="slide-content">
+            <div class="slide-header">
+                <div class="slide-number">Структура: Заключение</div>
+                <h1>Эффективное заключение</h1>
+                <div class="accent-line"></div>
+            </div>
+
+            <div class="cards-grid">
+                <div class="card-item">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M6 9l6 6 6-6"></path>
+                        </svg>
+                    </div>
+                    <div class="card-title">Объем</div>
+                    <div class="card-text">10-15% от общего текста, обычно 1-2 страницы</div>
+                </div>
+                <div class="card-item">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="1"></circle>
+                            <circle cx="19" cy="4" r="1"></circle>
+                            <circle cx="5" cy="20" r="1"></circle>
+                            <path d="M6.5 17.5L12.5 5.5M17.5 6.5L5.5 18.5"></path>
+                        </svg>
+                    </div>
+                    <div class="card-title">Основное содержание</div>
+                    <div class="card-text">Резюме основных результатов и найденных решений</div>
+                </div>
+                <div class="card-item">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2v20M2 12h20"></path>
+                        </svg>
+                    </div>
+                    <div class="card-title">Значимость</div>
+                    <div class="card-text">Объясните теоретическое и практическое значение вашей работы</div>
+                </div>
+            </div>
+
+            <div class="card" style="margin-top: 2rem; border-color: var(--warning); border-width: 2px;">
+                <h3 style="color: var(--warning); margin-bottom: 1rem; font-size: clamp(1.1rem, 2vw, 1.25rem);">⚠️ Частые ошибки в заключении:</h3>
+                <ul class="styled-list">
+                    <li>Введение нового материала</li>
+                    <li>Просто повторение текста из основной части</li>
+                    <li>Завышенные обобщения без оснований</li>
+                    <li>Отсутствие четких выводов</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 9: BIBLIOGRAPHY -->
+    <section>
+        <div class="slide-content">
+            <div class="slide-header">
+                <div class="slide-number">Оформление: Литература</div>
+                <h1>Список литературы и источников</h1>
+                <div class="accent-line"></div>
+            </div>
+
+            <div class="cards-grid">
+                <div class="card">
+                    <h3 style="color: var(--accent-primary); margin-bottom: 1rem; font-size: clamp(1rem, 2vw, 1.15rem);">Основное правило</h3>
+                    <p style="margin: 0; font-size: clamp(0.9rem, 1.5vw, 1rem); color: var(--text-secondary);">В списке должны быть ВСЕ источники, упомянутые в работе, и ТОЛЬКО они</p>
+                </div>
+                <div class="card">
+                    <h3 style="color: var(--accent-primary); margin-bottom: 1rem; font-size: clamp(1rem, 2vw, 1.15rem);">Организация</h3>
+                    <p style="margin: 0; font-size: clamp(0.9rem, 1.5vw, 1rem); color: var(--text-secondary);">Источники располагаются в алфавитном порядке или по ГОСТу</p>
+                </div>
+            </div>
+
+            <div class="card" style="margin-top: 2rem;">
+                <h3 style="margin-bottom: 1rem; font-size: clamp(1.1rem, 2vw, 1.25rem);">Форматирование элементов:</h3>
+                <ul class="styled-list">
+                    <li>Фамилия, Инициалы автора. Название. Издатель, год.</li>
+                    <li>Для электронных ресурсов: указать полный URL и дату доступа</li>
+                    <li>Соблюдайте единообразный стиль для всех источников</li>
+                    <li>Проверьте наличие всех необходимых данных</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 10: FORMATTING -->
+    <section>
+        <div class="slide-content">
+            <div class="slide-header">
+                <div class="slide-number">Требования: Оформление</div>
+                <h1>Технические требования</h1>
+                <div class="accent-line"></div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-number">12pt</div>
+                    <div class="stat-label">Times New Roman или Arial</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">1.5</div>
+                    <div class="stat-label">Межстрочный интервал</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">2 см</div>
+                    <div class="stat-label">Поля со всех сторон</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">15-30</div>
+                    <div class="stat-label">Рекомендуемый объем (стр.)</div>
+                </div>
+            </div>
+
+            <div class="card" style="margin-top: 2rem;">
+                <h3 style="margin-bottom: 1rem; font-size: clamp(1.1rem, 2vw, 1.25rem);">Стилистические элементы:</h3>
+                <ul class="styled-list">
+                    <li>Используйте научный стиль изложения</li>
+                    <li>Номеруйте разделы и подразделы</li>
+                    <li>Добавляйте номера страниц в нижний колонтитул</li>
+                    <li>Проверьте орфографию и пунктуацию</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 11: DEFENSE -->
+    <section>
+        <div class="slide-content">
+            <div class="slide-header">
+                <div class="slide-number">Финальный этап</div>
+                <h1>Подготовка к защите</h1>
+                <div class="accent-line"></div>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-label">НЕДЕЛЯ 1</div>
+                    <div class="timeline-title">Изучение своей работы</div>
+                    <div class="timeline-text">Перечитайте всю работу, выделите ключевые моменты</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-label">НЕДЕЛЯ 2</div>
+                    <div class="timeline-title">Подготовка презентации</div>
+                    <div class="timeline-text">Создайте наглядную презентацию с графиками и схемами</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-label">НЕДЕЛЯ 3</div>
+                    <div class="timeline-title">Репетиция и практика</div>
+                    <div class="timeline-text">Потренируйтесь выступать, засеките время (обычно 5-10 минут)</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-label">ДЕНЬ ЗАЩИТЫ</div>
+                    <div class="timeline-title">Уверенное выступление</div>
+                    <div class="timeline-text">Говорите четко, поддерживайте контакт с аудиторией</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 12: THANK YOU -->
+    <section>
+        <div class="slide-content">
+            <div style="text-align: center;">
+                <h1 style="margin-bottom: 2rem; font-size: clamp(2rem, 10vw, 3.5rem);">Спасибо за внимание!</h1>
+
+                <p style="font-size: clamp(1rem, 2vw, 1.2rem); color: var(--text-secondary); margin-bottom: 2rem;">Мы надеемся, что этот материал поможет вам написать отличный реферат. Успехов в вашей творческой и учебной деятельности!</p>
+
+                <div class="authors-showcase" style="margin: 2.5rem 0;">
+                    <div class="author-badge">
+                        <div class="author-letter">А</div>
+                        <div class="author-name">Актанов Д.</div>
+                    </div>
+                    <div class="author-badge">
+                        <div class="author-letter">А</div>
+                        <div class="author-name">Ашенов К.</div>
+                    </div>
+                    <div class="author-badge">
+                        <div class="author-letter">Т</div>
+                        <div class="author-name">Тарасов С.</div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 2.5rem; padding: 1.8rem; background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1)); border: 2px solid var(--border-color); border-radius: 12px;">
+                    <p style="font-size: clamp(1rem, 1.8vw, 1.15rem); margin-bottom: 0.5rem; font-weight: 600;">ИМ-32 • Margulan University</p>
+                    <p style="font-size: clamp(0.85rem, 1.5vw, 0.95rem); color: var(--text-tertiary);">2026</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NAVIGATION -->
+    <div class="nav-bar">
+        <button class="nav-btn" id="prevBtn" title="Предыдущий слайд (↑)">↑</button>
+        <button class="theme-btn" id="themeBtn" title="Переключить тему (Ctrl+[)">🌙</button>
+        <button class="nav-btn" id="nextBtn" title="Следующий слайд (↓)">↓</button>
+    </div>
+
+    <!-- NAVIGATION DOTS -->
+    <div class="nav-dots" id="navDots"></div>
+
+    <script>
+        const sections = document.querySelectorAll('section');
+        const totalSlides = sections.length;
+        let currentSlide = 0;
+        let scrollTimeout = null;
+        let isScrolling = false;
+
+        function updateUI() {
+            document.querySelector('.current-slide').textContent = currentSlide + 1;
+            const progress = ((currentSlide + 1) / totalSlides) * 100;
+            document.querySelector('.progress-bar').style.width = progress + '%';
+            
+            // Update active dot
+            document.querySelectorAll('.nav-dot').forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentSlide);
+            });
+        }
+
+        function goToSlide(index) {
+            if (index >= 0 && index < totalSlides && !isScrolling) {
+                isScrolling = true;
+                currentSlide = index;
+                sections[currentSlide].scrollIntoView({ behavior: 'smooth', block: 'start' });
+                updateUI();
+                
+                // Оптимизированная задержка: зависит от расстояния между слайдами
+                const distance = Math.abs(index - currentSlide);
+                const delay = Math.min(300 + distance * 50, 600);
+                
+                setTimeout(() => {
+                    isScrolling = false;
+                }, delay);
+            }
+        }
+
+        document.getElementById('nextBtn').addEventListener('click', () => goToSlide(currentSlide + 1));
+        document.getElementById('prevBtn').addEventListener('click', () => goToSlide(currentSlide - 1));
+
+        document.getElementById('themeBtn').addEventListener('click', () => {
+            document.documentElement.classList.toggle('light-theme');
+            const isLight = document.documentElement.classList.contains('light-theme');
+            document.getElementById('themeBtn').textContent = isLight ? '☀️' : '🌙';
+            localStorage.setItem('theme', isLight ? 'light' : 'dark');
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+                e.preventDefault();
+                goToSlide(currentSlide + 1);
+            }
+            if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+                e.preventDefault();
+                goToSlide(currentSlide - 1);
+            }
+            if (e.key === ' ') {
+                e.preventDefault();
+                goToSlide(currentSlide + 1);
+            }
+            if ((e.ctrlKey || e.metaKey) && e.key === '[') {
+                e.preventDefault();
+                document.getElementById('themeBtn').click();
+            }
+        });
+
+        document.addEventListener('wheel', (e) => {
+            if (isScrolling) return;
+            
+            if (scrollTimeout) clearTimeout(scrollTimeout);
+            
+            if (e.deltaY > 30) {
+                goToSlide(currentSlide + 1);
+            } else if (e.deltaY < -30) {
+                goToSlide(currentSlide - 1);
+            }
+            
+            scrollTimeout = setTimeout(() => {
+                scrollTimeout = null;
+            }, 800);
+        }, { passive: true });
+
+        // Load saved theme
+        if (localStorage.getItem('theme') === 'light') {
+            document.documentElement.classList.add('light-theme');
+            document.getElementById('themeBtn').textContent = '☀️';
+        }
+
+        // Initialize navigation dots
+        const navDotsContainer = document.getElementById('navDots');
+        for (let i = 0; i < totalSlides; i++) {
+            const dot = document.createElement('button');
+            dot.className = 'nav-dot';
+            dot.setAttribute('title', `Слайд ${i + 1}`);
+            dot.addEventListener('click', () => goToSlide(i));
+            navDotsContainer.appendChild(dot);
+        }
+
+        document.querySelector('.total-slides').textContent = totalSlides;
+        updateUI();
+    </script>
+</body>
+</html>
