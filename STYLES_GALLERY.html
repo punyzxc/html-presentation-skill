@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎨 Enhanced Styles Gallery</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            min-height: 100vh;
+            padding: 60px 20px;
+            position: relative;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            color: white;
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            text-align: center;
+            font-size: 1.2rem;
+            margin-bottom: 50px;
+            text-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .style-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .style-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        
+        .style-preview {
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            font-size: 1.2rem;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .preview-minimal-dark {
+            background: linear-gradient(135deg, #09090b 0%, #18181b 100%);
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(168, 85, 247, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(0, 217, 255, 0.15) 0%, transparent 40%);
+        }
+        
+        .preview-minimal-light {
+            background: linear-gradient(135deg, #ffffff 0%, #f9fafb 50%, #f3f4f6 100%);
+            color: #1e293b;
+        }
+        
+        .preview-gradient-mesh {
+            background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #4facfe, #00f2fe);
+            background-size: 400% 400%;
+            animation: meshGradient 5s ease infinite;
+        }
+        
+        .preview-neomorphism {
+            background: linear-gradient(135deg, #e0e5ec 0%, #d5dce3 50%, #e0e5ec 100%);
+            color: #2d3436;
+        }
+        
+        .preview-brutalist {
+            background: #000;
+            color: #fff;
+            border: 3px solid #ff0000;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        
+        .preview-corporate {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 50%, #e0f2fe 100%);
+            color: #1e293b;
+        }
+        
+        .preview-retro {
+            background: #0f0f23;
+            text-shadow: 
+                0 0 10px #05d9e8, 
+                0 0 20px #05d9e8, 
+                0 0 40px #05d9e8;
+            color: #05d9e8;
+            font-family: 'Space Mono', monospace;
+            font-weight: 900;
+        }
+        
+        @keyframes meshGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .style-info {
+            padding: 24px;
+        }
+        
+        .style-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+        
+        .style-emoji {
+            font-size: 1.5rem;
+            margin-right: 8px;
+        }
+        
+        .style-effects {
+            font-size: 0.9rem;
+            color: #636e72;
+            line-height: 1.6;
+        }
+        
+        .effect-tag {
+            display: inline-block;
+            background: #e0e7ff;
+            color: #3730a3;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            margin-right: 6px;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+        
+        .preview-button {
+            display: inline-block;
+            margin-top: 16px;
+            padding: 10px 20px;
+            background: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.2s ease;
+            text-decoration: none;
+        }
+        
+        .preview-button:hover {
+            background: #2563eb;
+        }
+        
+        .footer {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.8);
+            padding: 40px 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .github-link {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            margin: 0 10px;
+            transition: all 0.2s ease;
+        }
+        
+        .github-link:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+        }
+        
+        .status-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.2);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            backdrop-filter: blur(10px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 Enhanced Presentation Styles</h1>
+        <p class="subtitle">WOW Effects за гранью просто смены цветов</p>
+        
+        <div class="gallery">
+            <!-- MINIMAL DARK -->
+            <div class="style-card">
+                <div class="style-preview preview-minimal-dark">
+                    <div class="status-badge">✨ Enhanced</div>
+                    🌙 Minimal Dark
+                </div>
+                <div class="style-info">
+                    <div class="style-name"><span class="style-emoji">🌙</span>Minimal Dark</div>
+                    <div class="style-effects">
+                        <p><strong>Эффекты:</strong></p>
+                        <div>
+                            <span class="effect-tag">Neon Gradients</span>
+                            <span class="effect-tag">3D Cards</span>
+                            <span class="effect-tag">Parallax</span>
+                            <span class="effect-tag">Staggered Lists</span>
+                        </div>
+                    </div>
+                    <p style="margin-top: 12px; font-size: 0.85rem; color: #a1a1aa;">Неоновые градиенты, 3D трансформации карт, параллакс фон</p>
+                    <a href="Альбина_MinimalDark_Enhanced.html" class="preview-button">👁️ Просмотр</a>
+                </div>
+            </div>
+            
+            <!-- MINIMAL LIGHT -->
+            <div class="style-card">
+                <div class="style-preview preview-minimal-light">
+                    <div class="status-badge">✨ Enhanced</div>
+                    ☀️ Minimal Light
+                </div>
+                <div class="style-info">
+                    <div class="style-name"><span class="style-emoji">☀️</span>Minimal Light</div>
+                    <div class="style-effects">
+                        <p><strong>Эффекты:</strong></p>
+                        <div>
+                            <span class="effect-tag">Morphing Shadows</span>
+                            <span class="effect-tag">Floating Elements</span>
+                            <span class="effect-tag">Micro Pattern</span>
+                            <span class="effect-tag">Smooth Transitions</span>
+                        </div>
+                    </div>
+                    <p style="margin-top: 12px; font-size: 0.85rem; color: #636e72;">Морфирующие тени, плавающие элементы, микропаттерн</p>
+                </div>
+            </div>
+            
+            <!-- GRADIENT MESH -->
+            <div class="style-card">
+                <div class="style-preview preview-gradient-mesh">
+                    <div class="status-badge">✨ Enhanced</div>
+                    🌈 Gradient Mesh
+                </div>
+                <div class="style-info">
+                    <div class="style-name"><span class="style-emoji">🌈</span>Gradient Mesh</div>
+                    <div class="style-effects">
+                        <p><strong>Эффекты:</strong></p>
+                        <div>
+                            <span class="effect-tag">Animated Waves</span>
+                            <span class="effect-tag">Clip-path Cards</span>
+                            <span class="effect-tag">Text Morphing</span>
+                            <span class="effect-tag">Interactive Parallax</span>
+                        </div>
+                    </div>
+                    <p style="margin-top: 12px; font-size: 0.85rem; color: rgba(255,255,255,0.7);">Волны, клип-пас карты, морфинг текста</p>
+                    <a href="Альбина_GradientMesh.html" class="preview-button">👁️ Просмотр</a>
+                </div>
+            </div>
+            
+            <!-- NEOMORPHISM -->
+            <div class="style-card">
+                <div class="style-preview preview-neomorphism">
+                    <div class="status-badge">✨ Enhanced</div>
+                    🔳 Neomorphism
+                </div>
+                <div class="style-info">
+                    <div class="style-name"><span class="style-emoji">🔳</span>Neomorphism</div>
+                    <div class="style-effects">
+                        <p><strong>Эффекты:</strong></p>
+                        <div>
+                            <span class="effect-tag">3D Mouse Tracking</span>
+                            <span class="effect-tag">Invert Shadows</span>
+                            <span class="effect-tag">Morphing Elements</span>
+                            <span class="effect-tag">Embossed Style</span>
+                        </div>
+                    </div>
+                    <p style="margin-top: 12px; font-size: 0.85rem; color: #636e72;">3D глубина по мышке, инвертирующиеся тени</p>
+                </div>
+            </div>
+            
+            <!-- BRUTALIST -->
+            <div class="style-card">
+                <div class="style-preview preview-brutalist">
+                    <div class="status-badge">✨ Enhanced</div>
+                    ⚡ BRUTALIST
+                </div>
+                <div class="style-info">
+                    <div class="style-name"><span class="style-emoji">⚡</span>Brutalist</div>
+                    <div class="style-effects">
+                        <p><strong>Эффекты:</strong></p>
+                        <div>
+                            <span class="effect-tag">Grid Animation</span>
+                            <span class="effect-tag">Glitter Effects</span>
+                            <span class="effect-tag">Jumping Elements</span>
+                            <span class="effect-tag">Sharp Geometry</span>
+                        </div>
+                    </div>
+                    <p style="margin-top: 12px; font-size: 0.85rem; color: #ff0000;">Глиттер, резкие прыжки, пульсирующая сетка</p>
+                    <a href="Альбина.html" class="preview-button">👁️ Просмотр</a>
+                </div>
+            </div>
+            
+            <!-- CORPORATE -->
+            <div class="style-card">
+                <div class="style-preview preview-corporate">
+                    <div class="status-badge">✨ Enhanced</div>
+                    🏢 Corporate
+                </div>
+                <div class="style-info">
+                    <div class="style-name"><span class="style-emoji">🏢</span>Corporate</div>
+                    <div class="style-effects">
+                        <p><strong>Эффекты:</strong></p>
+                        <div>
+                            <span class="effect-tag">Border Morphing</span>
+                            <span class="effect-tag">Gradient Text</span>
+                            <span class="effect-tag">Card Flipping</span>
+                            <span class="effect-tag">Professional</span>
+                        </div>
+                    </div>
+                    <p style="margin-top: 12px; font-size: 0.85rem; color: #1e40af;">Морфирующие бордеры, градиентные текста, профессиональные переходы</p>
+                </div>
+            </div>
+            
+            <!-- RETRO/NEON -->
+            <div class="style-card">
+                <div class="style-preview preview-retro">
+                    <div class="status-badge">✨ Enhanced</div>
+                    🎮 RETRO NEON
+                </div>
+                <div class="style-info">
+                    <div class="style-name"><span class="style-emoji">🎮</span>Retro / Neon</div>
+                    <div class="style-effects">
+                        <p><strong>Эффекты:</strong></p>
+                        <div>
+                            <span class="effect-tag">Scanlines</span>
+                            <span class="effect-tag">RGB Glitch</span>
+                            <span class="effect-tag">Neon Flicker</span>
+                            <span class="effect-tag">VHS Distortion</span>
+                        </div>
+                    </div>
+                    <p style="margin-top: 12px; font-size: 0.85rem; color: #05d9e8;">Сканлайны, гличчи, VHS эффект, неоновое мерцание</p>
+                    <a href="Альбина_RetroNeon_Enhanced.html" class="preview-button">👁️ Просмотр</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <h2 style="color: white; margin-bottom: 20px; font-size: 1.5rem;">🚀 Информация</h2>
+            <p style="margin-bottom: 20px;">
+                Все эффекты реализованы на чистом CSS и ванильном JavaScript  <br>
+                Никаких внешних библиотек, работает полностью офлайн
+            </p>
+            <div>
+                <a href="https://github.com/punyzxc/html-presentation-skill" class="github-link">
+                    🔗 GitHub Repository
+                </a>
+                <a href="ENHANCED_STYLES_CHANGELOG.md" class="github-link">
+                    📋 Changelog
+                </a>
+            </div>
+            <p style="margin-top: 30px; font-size: 0.9rem;">
+                <strong>Коммит:</strong> feat: Add WOW effects to presentation styles  <br>
+                <strong>Дата:</strong> 13 апреля 2026  <br>
+                <strong>Статус:</strong> ✅ Все 7 стилей улучшены (Glassmorphism не менялась)
+            </p>
+        </div>
+    </div>
+</body>
+</html>
